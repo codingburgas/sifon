@@ -6,7 +6,7 @@
 #include "./Components/SpriteComponent.hpp"
 #include "./Components/TransformComponent2D.hpp"
 
-#include <memory>
+#include <memory>	
 #include <iostream>
 
 int main()

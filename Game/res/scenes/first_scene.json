@@ -15,6 +15,10 @@
       },
       "SpriteComponent": {
         "ImagePath": "res/MicrosoftTeams-image.png"
+      },
+      "UIComponent": {
+        "Type": "Button",
+        "Text": "Hello World!"
       }
     }
   },

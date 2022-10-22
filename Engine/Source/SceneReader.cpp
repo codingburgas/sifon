@@ -5,8 +5,9 @@
 #include <cassert>
 #include <sstream>
 
-#include "Components/TransformComponent2D.hpp"
-#include "Components/SpriteComponent.hpp"
+#include "./Components/TransformComponent2D.hpp"
+#include "./Components/SpriteComponent.hpp"
+#include "./Components/UIComponent.hpp"
 
 #include "Util/json.hpp"
 
@@ -116,6 +117,15 @@ void InitSceneFromFile(const std::string fPath)
                 auto cmp = ECS::CreateComponent<SpriteComponent>();
 
                 component["ImagePath"].get_to(cmp->ImagePath);
+
+                entity->AddComponent(cmp);
+            }
+            else if (name == "UIComponent")
+            {
+                auto cmp = ECS::CreateComponent<UIComponent>();
+
+                component["Type"].get_to(cmp->type);
+                component["Text"].get_to(cmp->text);
 
                 entity->AddComponent(cmp);
             }
