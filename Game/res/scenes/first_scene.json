@@ -15,6 +15,22 @@
       },
       "SpriteComponent": {
         "ImagePath": "res/MicrosoftTeams-image.png"
+      }
+    }
+  },
+  {
+    "DestroyOnReload": true,
+    "Components": {
+      "TransformComponent2D": {
+        "Position": {
+          "x": 405,
+          "y": 400
+        },
+        "Rotation": 0.0,
+        "Scale": {
+          "x": 1,
+          "y": 1
+        }
       },
       "UIComponent": {
         "Type": "Button",
