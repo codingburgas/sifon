@@ -23,7 +23,7 @@ void SpriteComponent::OnUpdate()
     auto texRes = texture->GetSize();
 
     texture->Draw(transform->Position, transform->Scale,
-        transform->Rotation, Vec2f { static_cast<float>(texRes.x) / 2.f, static_cast<float>(texRes.y) / 2.f });
+        transform->Rotation, Vec2f {});
 }
 
 Vec2i SpriteComponent::GetSpriteRes()
