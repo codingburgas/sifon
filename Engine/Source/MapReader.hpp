@@ -20,11 +20,11 @@ struct Line
     Vec2f p1, p2;
 };
 
-class MapLoader
+class MapReader
 {
 public:
-    MapLoader(Vec2f minNorm, Vec2f maxNorm, std::string nameKey) : m_MinNormalised(minNorm), m_MaxNormalised(maxNorm), m_NameKey(nameKey) {};
-    ~MapLoader() = default;
+    MapReader(Vec2f minNorm, Vec2f maxNorm, std::string nameKey) : m_MinNormalised(minNorm), m_MaxNormalised(maxNorm), m_NameKey(nameKey) {};
+    ~MapReader() = default;
 
     void Load(const std::string fPath);
 

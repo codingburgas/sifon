@@ -3,7 +3,7 @@
 #include "MapReader.hpp"
 #include "Util/file_reader.hpp"
 
-void MapLoader::Load(const std::string fPath)
+void MapReader::Load(const std::string fPath)
 {
     nlohmann::json json{};
     {
@@ -16,7 +16,7 @@ void MapLoader::Load(const std::string fPath)
     normalisePoints();
 }
 
-void MapLoader::Parse(const nlohmann::json json)
+void MapReader::Parse(const nlohmann::json json)
 {
     auto typeName = json["type"].get<std::string>();
     if (typeName == "FeatureCollection")
@@ -36,7 +36,7 @@ void MapLoader::Parse(const nlohmann::json json)
         printf("[MapLoader] WARN: %s type not yet implemented\n", typeName.c_str());
 }
 
-FeatureCollection MapLoader::ParseFeatureCollection(const nlohmann::json json)
+FeatureCollection MapReader::ParseFeatureCollection(const nlohmann::json json)
 {
     // create an array to store polygons
     FeatureCollection collection{};
@@ -61,7 +61,7 @@ FeatureCollection MapLoader::ParseFeatureCollection(const nlohmann::json json)
     //
 }
 
-Feature MapLoader::ParseFeature(const nlohmann::json json)
+Feature MapReader::ParseFeature(const nlohmann::json json)
 {
     auto geometryType = json["geometry"]["type"].get<std::string>();
     auto properties = json["properties"];
@@ -80,7 +80,7 @@ Feature MapLoader::ParseFeature(const nlohmann::json json)
     return Feature{};
 }
 
-Polygon MapLoader::ParsePolygon(const nlohmann::json json)
+Polygon MapReader::ParsePolygon(const nlohmann::json json)
 {
     Polygon polygon;
 
@@ -97,7 +97,7 @@ Polygon MapLoader::ParsePolygon(const nlohmann::json json)
     return polygon;
 }
 
-std::vector<Polygon> MapLoader::ParseMultiPolygon(const nlohmann::json json)
+std::vector<Polygon> MapReader::ParseMultiPolygon(const nlohmann::json json)
 {
     std::vector<Polygon> polygons;
 
@@ -109,7 +109,7 @@ std::vector<Polygon> MapLoader::ParseMultiPolygon(const nlohmann::json json)
     return polygons;
 }
 
-void MapLoader::normalisePoints()
+void MapReader::normalisePoints()
 {
     {
         auto& firstPoint = (*m_CountryTable.begin()).second[0][0];
