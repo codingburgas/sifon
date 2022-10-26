@@ -4,6 +4,8 @@
 #include "Components/TransformComponent2D.hpp"
 #include "Components/SpriteComponent.hpp"
 #include "Components/UIComponent.hpp"
+#include "Components/MapStore.hpp"
+#include "Components/MapRenderer.hpp"
 
 #include "Util/file_reader.hpp"
 #include "Util/json.hpp"
@@ -87,6 +89,22 @@ void InitSceneFromFile(const std::string fPath)
 
                 component["Type"].get_to(cmp->type);
                 component["Text"].get_to(cmp->text);
+
+                entity->AddComponent(cmp);
+            }
+            else if (name == "MapStore")
+            {
+                auto cmp = ECS::CreateComponent<MapStore>();
+
+                component["FilePath"].get_to(cmp->m_FilePath);
+
+                entity->AddComponent(cmp);
+            }
+            else if (name == "MapRenderer")
+            {
+                auto cmp = ECS::CreateComponent<MapRenderer>();
+
+                component["MapStoreEntityTag"].get_to(cmp->m_MapStoreEntityTag);
 
                 entity->AddComponent(cmp);
             }

@@ -20,17 +20,24 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Components\Component.cpp" />
+    <ClCompile Include="Source\Components\MapRenderer.cpp" />
+    <ClCompile Include="Source\Components\MapStore.cpp" />
     <ClCompile Include="Source\Components\SpriteComponent.cpp" />
     <ClCompile Include="Source\Components\UIComponent.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\Managers\EntityManager.cpp" />
     <ClCompile Include="Source\Managers\AppManager.cpp" />
+    <ClCompile Include="Source\MapReader.cpp" />
     <ClCompile Include="Source\SceneReader.cpp" />
     <ClCompile Include="Source\UIElement.cpp" />
+    <ClCompile Include="Source\Util\file_reader.cpp" />
     <ClCompile Include="Source\Util\graphics.cpp" />
+    <ClCompile Include="Source\Util\la.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Components\Component.hpp" />
+    <ClInclude Include="Source\Components\MapRenderer.hpp" />
+    <ClInclude Include="Source\Components\MapStore.hpp" />
     <ClInclude Include="Source\Components\SpriteComponent.hpp" />
     <ClInclude Include="Source\Components\TransformComponent2D.hpp" />
     <ClInclude Include="Source\Components\UIComponent.hpp" />
@@ -41,9 +48,11 @@
     <ClInclude Include="Source\Managers\AppManager.hpp" />
     <ClInclude Include="Source\SceneReader.hpp" />
     <ClInclude Include="Source\UIElement.hpp" />
+    <ClInclude Include="Source\Util\file_reader.hpp" />
     <ClInclude Include="Source\Util\graphics.hpp" />
     <ClInclude Include="Source\Util\json.hpp" />
     <ClInclude Include="Source\Util\la.hpp" />
+    <ClInclude Include="Source\MapReader.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
