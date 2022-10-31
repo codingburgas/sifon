@@ -36,10 +36,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Components\Component.hpp" />
+    <ClInclude Include="Source\Components\MainMenu.hpp" />
     <ClInclude Include="Source\Components\MapRenderer.hpp" />
     <ClInclude Include="Source\Components\MapStore.hpp" />
     <ClInclude Include="Source\Components\SpriteComponent.hpp" />
     <ClInclude Include="Source\Components\TransformComponent2D.hpp" />
+    <ClInclude Include="Source\Components\UIBuilder.hpp" />
     <ClInclude Include="Source\Components\UIComponent.hpp" />
     <ClInclude Include="Source\config.h" />
     <ClInclude Include="Source\Entity.hpp" />
