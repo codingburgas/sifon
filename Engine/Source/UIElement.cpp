@@ -2,82 +2,34 @@
 
 #include <iostream>
 
-void UIElement::SetText(const char* text)
+// MainMenuButton styling and tweaking
+std::string MainMenuButton::s_FontPath{ "res/fonts/Inter/Inter-Black.ttf" };
+float MainMenuButton::s_FontSize = 100.f;
+
+Color MainMenuButton::s_GlowColor{ 255, 0, 0, 255 };
+Color MainMenuButton::s_TextColor{ 255, 255, 255, 255 };
+
+float MainMenuButton::s_LeftPadding = 60.f;
+
+void MainMenuButton::Draw()
 {
-	this->text = text;
-}
+	//DrawCircleGradient(m_Size.x / 2.f + m_Position.x, m_Size.y / 2.f + m_Position.y, m_Size.y, s_GlowColor, {0, 0, 0, 0});
+	//DrawTexture(m_Gradient, m_Position.x, m_Position.y, WHITE);
 
-Rectangle UIElement::GetBorder(Vector2 pos, Vector2 size, double rotation)
-{
-	const Vector2 offset = { 60, 30 };
+	m_ShaderRenderTexture.BeginDrawingTo();
+	DrawTextEx(m_Font, m_Text.c_str(), {}, s_FontSize, 1.f, s_TextColor);
+	m_ShaderRenderTexture.EndDrawingTo();
 
-	Vector2 borderSize = {
-		MeasureText(text, fontSize) + offset.x,
-		fontSize + offset.y
-	};
+	//BeginShaderMode(m_BloomShader);
+	DrawTexture(m_ShaderRenderTexture.GetRenderTexture().texture, m_Position.x, m_Position.y, WHITE);
+	//EndShaderMode();
 
-	if (borderSize.x < size.x && borderSize.y < size.y)
-		borderSize = size;
-
-	Rectangle bounds = {
-		pos.x - offset.x / 2,
-		pos.y - offset.y / 2,
-		borderSize.x,
-		borderSize.y
-	};
-
-	return bounds;
-}
-
-void UIElement::DrawBorder(Rectangle bounds, float width)
-{
-	DrawRectangleLinesEx(
-		bounds,
-		width,
-		Color(BLACK)
-	);
-}
-
-void Label::Draw(Vector2 pos, Vector2 size, double rotation)
-{
-	Rectangle bounds = GetBorder(pos, size, rotation);
-
-	DrawBorder(bounds, thickness);
-
-	DrawText(
-		text,
-		static_cast<int>(pos.x),
-		static_cast<int>(pos.y),
-		fontSize,
-		Color(BLACK)
-	);
-}
-
-bool Button::GetClicked(Rectangle bounds)
-{
-	Vector2 mousePos = GetMousePosition();
-
-	return CheckCollisionPointRec(mousePos, bounds) && IsMouseButtonPressed(0);
-}
-
-void Button::Draw(Vector2 pos, Vector2 size, double rotation)
-{
-	Rectangle bounds = GetBorder(pos, size, rotation);
-
-	DrawBorder(bounds, thickness);
-	
-
-	is_clicked = GetClicked(bounds);
-	
-	if (is_clicked)
-		printf("UI: Button is clicked\n");
-
-
-	DrawText(
-		text,
-		static_cast<int>(pos.x),
-		static_cast<int>(pos.y),
-		fontSize,
-		Color(BLACK)
-	);
+	if (CheckCollisionPointRec(GetMousePosition(), { m_Position.x, m_Position.y, m_Size.x, m_Size.y }))
+	{
+		DrawRectangleLines(m_Position.x, m_Position.y, m_Size.x, m_Size.y, WHITE);
+		if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+		{
+			m_Callback();
+		}
+	}
 }
