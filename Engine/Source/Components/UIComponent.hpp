@@ -2,21 +2,20 @@
 #include "../UIElement.hpp"
 #include "Component.hpp"
 
-#include "string"
+#include <unordered_set>
 
-class UIComponent : public Component
+// The UILayer's purpose is to store UIElement(s) and render them (by calling Draw()).
+// Input handling is done separately in the UIElement itself.
+class UILayer : public Component
 {
 public:
-	DEFINE_COMPONENT(UIComponent);
-	virtual ~UIComponent() = default;
+	DEFINE_COMPONENT(UILayer);
+	virtual ~UILayer() = default;
 
-	void OnCreate() override;
 	void OnUpdate() override;
-	void OnDestroy() override;
 
-	std::string text;
-	std::string type;
+	void PushElement(std::shared_ptr<UIElement> element);
 
 private:
-	std::shared_ptr<UIElement> element;
+	std::unordered_set<std::shared_ptr<UIElement>> m_Elements;
 };

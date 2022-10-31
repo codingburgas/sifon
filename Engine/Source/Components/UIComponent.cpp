@@ -3,30 +3,15 @@
 
 #include "../UIElement.hpp"
 
-void UIComponent::OnCreate()
+void UILayer::OnUpdate()
 {
-	if (type == "Label")
+	for (auto& element : m_Elements)
 	{
-		element = UIElement::CreateUIElement<Label>();
+		element->Draw();
 	}
-	else if (type == "Button")
-	{
-		element = UIElement::CreateUIElement<Button>();
-	}
-	else return;
-
-	element->SetText(text.c_str());
 }
 
-void UIComponent::OnUpdate()
+void UILayer::PushElement(std::shared_ptr<UIElement> element)
 {
-	std::shared_ptr<TransformComponent2D> transform = GET_COMPONENT(TransformComponent2D);
-
-	element->Draw(
-		transform->Position,
-		{ 120 * transform->Scale.x, 60 * transform->Scale.y },
-		transform->Rotation
-	);
+	m_Elements.insert(element);
 }
-
-void UIComponent::OnDestroy() {}
