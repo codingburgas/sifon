@@ -48,6 +48,9 @@ void CTexture::LoadEmpty(Vec2i res)
 
     renderTexture = LoadRenderTexture(res.x, res.y);
     verticallyMirroredTexture = LoadRenderTexture(res.x, res.y);
+
+    if (renderTexture.texture.id == 0 || verticallyMirroredTexture.texture.id == 0)
+        throw std::runtime_error("Frame buffer (render texture) could not be created");
 }
 
 void CTexture::LoadFromFile(const char *path)
@@ -59,7 +62,7 @@ void CTexture::LoadFromFile(const char *path)
     if (texture.id == 0)
     {
         printf("FATAL: Texture could not be loaded [%s]\n", path);
-        exit(1);
+        throw std::runtime_error("Texture \"" + std::string{path} + "\" could not be loaded!");
     }
 }
 
