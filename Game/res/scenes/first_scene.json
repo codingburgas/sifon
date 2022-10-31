@@ -31,10 +31,6 @@
           "x": 1,
           "y": 1
         }
-      },
-      "UIComponent": {
-        "Type": "Button",
-        "Text": "Hello World!"
       }
     }
   },

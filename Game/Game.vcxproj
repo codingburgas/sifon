@@ -146,6 +146,12 @@
       <Project>{b16864de-b102-4afb-9aa3-0960b8c1c92b}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="res\scenes\first_scene.json" />
+    <None Include="res\scenes\main_menu_scene.json" />
+    <None Include="res\scenes\second_scene.json" />
+    <None Include="res\shaders\bloom.fs" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

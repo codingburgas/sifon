@@ -19,4 +19,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="res\scenes\main_menu_scene.json" />
+    <None Include="res\scenes\first_scene.json" />
+    <None Include="res\scenes\second_scene.json" />
+    <None Include="res\shaders\bloom.fs" />
+  </ItemGroup>
 </Project>
