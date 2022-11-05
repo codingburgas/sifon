@@ -2,6 +2,8 @@
 #include "../Managers/AppManager.hpp"
 #include "../config.h"
 
+// lol, remember that :: is scope resolution operator
+
 bool Graphics::InitWindow(Vec2f winDimensions, const char* title)
 {
     ::InitWindow(static_cast<int>(winDimensions.x), static_cast<int>(winDimensions.y), title);
@@ -149,6 +151,67 @@ Texture& CTexture::GetTexture()
 RenderTexture2D& CTexture::GetRenderTexture()
 {
     return verticallyMirroredTexture;
+}
+
+void CShader::Load(std::string vertexShader, std::string fragmentShader)
+{
+    const char* vShader = (vertexShader == "" ? nullptr : vertexShader.c_str());
+    const char* fShader = (fragmentShader == "" ? nullptr : fragmentShader.c_str());
+
+    m_Shader = LoadShader(vShader, fShader);
+}
+
+void CShader::Unload()
+{
+    UnloadShader(m_Shader);
+}
+
+void CShader::SetShaderValue(std::string uniformName, std::any value, int type)
+{
+    if (m_Shader.id == 0) return;
+
+    if (m_ShaderLocs.find(uniformName) == m_ShaderLocs.end())
+    {
+        m_ShaderLocs[uniformName] = ::GetShaderLocation(m_Shader, uniformName.c_str());
+    }
+
+    switch (type)
+    {
+    case SHADER_UNIFORM_FLOAT:
+    {
+        float data = std::any_cast<float>(value);
+        ::SetShaderValue(m_Shader, m_ShaderLocs.at(uniformName), &data, type);
+        break;
+    }
+    case SHADER_UNIFORM_VEC2:
+    {
+        Vector2 data = std::any_cast<Vector2>(value);
+        ::SetShaderValue(m_Shader, m_ShaderLocs.at(uniformName), &data, type);
+        break;
+    }
+    case SHADER_UNIFORM_VEC3:
+    {
+        Vector3 data = std::any_cast<Vector3>(value);
+        ::SetShaderValue(m_Shader, m_ShaderLocs.at(uniformName), &data, type);
+        break;
+    }
+    case SHADER_UNIFORM_VEC4:
+    {
+        Vector4 data = std::any_cast<Vector4>(value);
+        ::SetShaderValue(m_Shader, m_ShaderLocs.at(uniformName), &data, type);
+        break;
+    }
+    case SHADER_UNIFORM_INT:
+    {
+        int data = std::any_cast<int>(value);
+        ::SetShaderValue(m_Shader, m_ShaderLocs.at(uniformName), &data, type);
+    }
+    }
+}
+
+Shader& CShader::GetShader()
+{
+    return m_Shader;
 }
 
 bool Input::IsKeyDown(int key)

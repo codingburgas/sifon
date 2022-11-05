@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cassert>
 #include <memory>
+#include <any>
 #include <unordered_map>
 #include "../Managers/AppManager.hpp"
 #include "la.hpp"
@@ -32,6 +33,27 @@ private:
     Texture texture {};
     RenderTexture renderTexture {};
     RenderTexture verticallyMirroredTexture {};
+};
+
+class CShader
+{
+public:
+    CShader() = default;
+    virtual ~CShader()
+    {
+        Unload();
+    };
+
+    void Load(std::string vertexShader, std::string fragmentShader);
+    void Unload();
+
+    void SetShaderValue(std::string uniformName, std::any value, int type);
+
+    Shader& GetShader();
+
+private:
+    std::unordered_map<std::string, int> m_ShaderLocs;
+    Shader m_Shader{};
 };
 
 namespace Graphics
