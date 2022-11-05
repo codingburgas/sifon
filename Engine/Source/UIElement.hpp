@@ -10,9 +10,6 @@
 // Each UIElement has its own Draw function and handles user input by itself (if needed).
 class UIElement
 {
-protected:
-	Vector2 m_Size{};
-
 public:
 	Vector2 m_Position{};
 
@@ -21,10 +18,7 @@ public:
 	virtual ~UIElement() = default;
 
 	virtual void Draw() {};
-	Vector2 GetSize()
-	{
-		return m_Size;
-	}
+	virtual Vector2 GetSize() = 0;
 };
 
 class MainMenuButton : public UIElement
@@ -36,42 +30,40 @@ private:
 	std::function<void()> m_Callback = []() {};
 	float m_CenterOffset = 0.f;
 
-	Shader m_BloomShader;
+	float m_InterpolatedSize = 0.f;
+	float m_Time = 0.f;
+
+	CShader m_BloomShader;
 	CTexture m_ShaderRenderTexture{};
 	
 public:
-	MainMenuButton(std::string text, float centerOffset, std::function<void()> callback)
-		: m_Text(text), m_CenterOffset(centerOffset), m_Callback(callback)
-	{
-		// Load font
-		m_Font = LoadFontEx(s_FontPath.c_str(), static_cast<int>(s_FontSize), nullptr, 0);
-		if (m_Font.texture.id == 0)
-			throw std::runtime_error("Font \"" + s_FontPath + "\" did not load properly");
-		m_Size = MeasureTextEx(m_Font, m_Text.c_str(), s_FontSize, 1.f);
-
-		// Load Bloom Shader
-		m_BloomShader = LoadShader(nullptr, "res/shaders/bloom.fs");
-		SetShaderValue(m_BloomShader, GetShaderLocation(m_BloomShader, "size"), &m_Size, SHADER_UNIFORM_VEC2);
-		m_ShaderRenderTexture.LoadEmpty({ static_cast<int>(m_Size.x * 1), static_cast<int>(m_Size.y) });
-
-		if (m_BloomShader.id == 0)
-			throw std::runtime_error("Shader \"res/shaders/bloom.fs\" did not load properly!");
-	}
+	MainMenuButton(std::string text, float centerOffset, std::function<void()> callback);
 
 	void Draw() override;
+	Vector2 GetSize() override;
 
 	~MainMenuButton()
 	{
 		UnloadFont(m_Font);
-		UnloadShader(m_BloomShader);
 	}
 	
 	// Public static styling of the button
+	
+	// Font path
 	static std::string s_FontPath;
+	// Font size
 	static float s_FontSize;
+	// The size that's being added to the original size for the shader's render texture
+	static int s_BufferSizeOffset;
 
+	// The color used for the text glow
 	static Color s_GlowColor;
+	// Text color
 	static Color s_TextColor;
 
+	// How much space is between the text render and the left boundary of the window
 	static float s_LeftPadding;
+
+	// Duration for glow animation
+	static float s_InterpTime;
 };

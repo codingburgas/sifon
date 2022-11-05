@@ -8,33 +8,42 @@ in vec4 fragColor;
 uniform sampler2D texture0;
 uniform vec4 colDiffuse;
 
-uniform vec2 size;
+uniform vec2 res;
+
+// GAUSSIAN BLUR SETTINGS {{{
+uniform float directions /* = 32.0 */; // BLUR DIRECTIONS (Default 16.0 - More is better but slower)
+uniform float quality /* = 7.0 */; // BLUR QUALITY (Default 4.0 - More is better but slower)
+uniform float size /* = 32.0 */; // BLUR SIZE (Radius)
+// GAUSSIAN BLUR SETTINGS }}}
 
 // Output fragment color
 out vec4 finalColor;
 
-// NOTE: Add here your custom variables
-const float samples = 5.0;          // Pixels per axis; higher = bigger glow, worse performance
-const float quality = 2.5;          // Defines size factor: Lower = smaller glow, better quality
-
 void main()
 {
-    vec4 sum = vec4(0);
-    vec2 sizeFactor = vec2(1)/size*quality;
 
-    // Texel color fetching from texture sampler
-    vec4 source = texture(texture0, fragTexCoord);
-
-    const int range = 2;            // should be = (samples - 1)/2;
-
-    for (int x = -range; x <= range; x++)
+//const float directions = 32.0; // BLUR DIRECTIONS (Default 16.0 - More is better but slower)
+//const float quality = 7.0; // BLUR QUALITY (Default 4.0 - More is better but slower)
+//const float size = 32.0; // BLUR SIZE (Radius)
+    float Pi = 6.28318530718; // Pi*2
+   
+    vec2 Radius = size/res.xy;
+    
+    // Normalized pixel coordinates (from 0 to 1)
+    vec2 uv = fragTexCoord;
+    // Pixel colour
+    vec4 Color = texture(texture0, uv);
+    
+    // Blur calculations
+    for( float d=0.0; d<Pi; d+=Pi/directions)
     {
-        for (int y = -range; y <= range; y++)
+		for(float i=1.0/quality; i<=1.0; i+=1.0/quality)
         {
-            sum += texture(texture0, fragTexCoord + vec2(x, y)*sizeFactor);
+			Color += texture( texture0, uv+vec2(cos(d),sin(d))*Radius*i);		
         }
     }
-
-    // Calculate final fragment color
-    finalColor = ((sum/(samples*samples)) + source)*colDiffuse;
+    
+    // Output to screen
+    Color /= quality * directions - 15.0;
+    finalColor =  Color;
 }
