@@ -56,7 +56,7 @@ void MainMenuButton::Draw()
 
 	if (CheckCollisionPointRec(GetMousePosition(), { m_Position.x, m_Position.y, GetSize().x, GetSize().y}))
 	{
-		m_BloomShader.SetShaderValue("size", EaseSineInOut(m_Time, 32.f, -24.f, s_InterpTime), SHADER_UNIFORM_FLOAT);
+		m_BloomShader.SetShaderValue("size", EaseSineInOut(m_Time, 8.f, 24.f, s_InterpTime), SHADER_UNIFORM_FLOAT);
 		if (m_Time < s_InterpTime)
 			m_Time += GetFrameTime();
 		if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
@@ -66,7 +66,7 @@ void MainMenuButton::Draw()
 	}
 	else
 	{
-		m_BloomShader.SetShaderValue("size", EaseSineInOut(m_Time, 32.f, -24.f, s_InterpTime), SHADER_UNIFORM_FLOAT);
+		m_BloomShader.SetShaderValue("size", EaseSineInOut(m_Time, 8.f, 24.f, s_InterpTime), SHADER_UNIFORM_FLOAT);
 		if (m_Time > 0.f)
 			m_Time -= GetFrameTime();
 	}
