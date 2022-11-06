@@ -38,7 +38,12 @@ void UpdateCamera(Camera2D& m_Camera)
 	{
 		c_Time = 0.f;
 		c_PreviousTargetZoom = c_TargetZoom;
-		c_TargetZoom += GetMouseWheelMove();
+		
+		if (GetMouseWheelMove() > 0)
+			c_TargetZoom *= 1.1f - (c_PreviousTargetZoom - 1.9f);
+		else
+			c_TargetZoom *= .9f;
+
 		if (c_TargetZoom <= 0.f)
 			c_TargetZoom = 1.f;
 		if (c_TargetZoom == 1.f)
@@ -46,14 +51,18 @@ void UpdateCamera(Camera2D& m_Camera)
 	}
 
 	m_Camera.zoom = EaseExpoOut(c_Time, c_TargetZoom, c_TargetZoom - c_PreviousTargetZoom, c_Duration);
+
 	if (GetMouseWheelMove() != 0 && !(c_TargetZoom <= 0.f))
 	{
 		Vec2f screenCenterToWorld{};
-		if (GetMouseWheelMove() < 0)
+
+		if (GetMouseWheelMove() > 0)
+		{
 			screenCenterToWorld = GetScreenToWorld2D({ GetMouseX() * 1.f, GetMouseY() * 1.f }, m_Camera);
-		else screenCenterToWorld = GetScreenToWorld2D({ GetMouseX() * 1.f, GetMouseY() * 1.f }, m_Camera);
-		m_Camera.target = screenCenterToWorld;
-		m_Camera.offset = screenCenterToWorld;
+			
+			m_Camera.target = screenCenterToWorld;
+			m_Camera.offset = screenCenterToWorld;
+		}
 	}
 
 	if (c_Time < c_Duration)

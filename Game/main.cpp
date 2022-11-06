@@ -16,7 +16,7 @@ int main()
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	SetConfigFlags(FLAG_MSAA_4X_HINT);
 
-	appManager->ChangeScene("res/scenes/main_menu_scene.json");
+	appManager->ChangeScene("res/scenes/second_scene.json");
 	appManager->Initialize();
 
 	SetExitKey(0);
