@@ -1,4 +1,5 @@
 ﻿#include "./UIElement.hpp"
+#include <reasings.h>
 
 #include <iostream>
 
@@ -13,8 +14,6 @@ Color MainMenuButton::s_TextColor{ 255, 255, 255, 255 };
 float MainMenuButton::s_LeftPadding = 60.f;
 
 float MainMenuButton::s_InterpTime = 0.15f;
-
-float EaseSineInOut(float t, float b, float c, float d) { return (-c / 2.0f * (cosf(PI * t / d) - 1.0f) + b); }
 
 Vector2 MainMenuButton::GetSize()
 {
