@@ -2,7 +2,8 @@
 # Team siPhone
 
 <p align="center">
-
+    <img src="docs/repo/banners/banner-dark.jpg#gh-dark-mode-only"/>
+    <img src="docs/repo/banners/banner-light.jpg#gh-light-mode-only"/>
 </p>
 
 <p align = "center">
