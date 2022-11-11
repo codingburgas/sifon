@@ -21,22 +21,30 @@
 ## 🗂️ Our Tech Stack
 ### Used code editor & collaborative service:
 <p align="left">
-
+    <a href="https://visualstudio.microsoft.com/vs/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Visual_Studio_Icon_2019.svg/1030px-Visual_Studio_Icon_2019.svg.png" alt="Visual Studio 2022 logo" width=44px /></a>
+    <a href="https://github.com/"><img src="https://img.icons8.com/nolan/344/github.png" alt="GitHub logo" width=52px /></a>
 </p>
 
 ### Used tools for our visual elements:
 <p align="left">
-
+    <a href="https://www.figma.com/"><img src="https://img.icons8.com/color/344/figma--v1.png" alt="Figma logo" width=48px/></a>
+    <a href="https://www.adobe.com/creativecloud.html"><img src="https://www.adobe.com/content/dam/shared/images/product-icons/svg/creative-cloud.svg" alt="adobe creative cloud" width=48px /></a>
 </p>
 
 ### Used technologies for our project development:
 <p align="left">
-
+    <a href="https://www.cplusplus.com/"><img src="https://www.rockodilegames.com/wp-content/uploads/2018/09/c-plus-plus-logo.png" alt="Figma logo" width=48px/></a>
+    <a href="https://github.com/TheBrightSide/codename-8ball-engine"><img src="https://i.imgur.com/OQvonLA.png" alt="raylib" width=48px /></a>
+    <a href="https://www.raylib.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Raylib_logo.png" alt="raylib" width=48px /></a>
 </p>
 
 ### Used tools for our documentation, presentation & communication:
 <p align="left">
-
+    <a href="https://www.doxygen.nl/"><img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/6ac1857f-f453-48fa-b3b9-4033de693b17/dbd0jys-fde5ad33-8c95-4dea-83fc-56c72aea2eb1.png" alt="Doxygen logo" width=42px /></a>
+    <a href="https://www.gitbook.com/"><img src="https://cdn.discordapp.com/attachments/878701034430672897/1040701411962409031/RFSGYvg_1.png" alt="GitBook logo" width=58px /></a>
+    <a href="https://www.microsoft.com/en-ww/microsoft-365/word"><img src="https://img.icons8.com/color/344/ms-word.png" alt="MS Word logo" width=48px /></a>
+    <a href="https://www.microsoft.com/en-ww/microsoft-365/excel"><img src="https://img.icons8.com/color/344/ms-excel.png" alt="MS Excel logo" width=48px /></a>
+    <a href="https://www.microsoft.com/en-ww/microsoft-365/powerpoint"><img src="https://img.icons8.com/color/344/ms-powerpoint.png" alt="MS PowerPoint logo" width=48px /></a>
 </p>
 
 <hr>
