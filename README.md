@@ -1,5 +1,4 @@
-
-# Team siPhone
+<h1 align="center">Team siPhone</h1>
 
 <p align="center">
     <img src="docs/repo/banners/banner-dark.jpg#gh-dark-mode-only"/>
