@@ -54,6 +54,10 @@
 
 ## 📥 Installation
 
+If you want to install our application, you can navigate towards the "<a href="https://github.com/codingburgas/2223-educational-traveling-sifon/releases">Releases</a>" tab and download the latest version. <br><br>
+Here's the link for you:
+<pre>https://github.com/codingburgas/2223-educational-traveling-sifon/releases</pre>
+
 ## 🧒 Our Team
 
 - <a href = "https://github.com/VTIvanov20"> Valeri Ivanov </a> (Scrum trainer)
