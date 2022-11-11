@@ -39,6 +39,8 @@
 
 </p>
 
+<hr>
+
 ## 📄 Documents
 ### QA Documentation
   - [Test Plan]()
@@ -52,11 +54,15 @@
 ### Presenting
   - [Presentation]()
 
+<hr>
+
 ## 📥 Installation
 
 If you want to install our application, you can navigate towards the "<a href="https://github.com/codingburgas/2223-educational-traveling-sifon/releases">Releases</a>" tab and download the latest version. <br><br>
 Here's the link for you:
 <pre>https://github.com/codingburgas/2223-educational-traveling-sifon/releases</pre>
+
+<hr>
 
 ## 🧒 Our Team
 
@@ -65,6 +71,11 @@ Here's the link for you:
 - <a href = "https://github.com/GGGeorgiev20"> Galin Georgiev </a> (Back-end Developer)
 - <a href = "https://github.com/PDMatsaliev20"> Petar Matsaliev </a> (QA Engineer)
 
+<hr>
 
-## Credits
+## 🤝 Credits
 - powered by [8ball-engine](https://github.com/TheBrightSide/codename-8ball-engine) created by AEManov20
+
+<hr>
+
+## <p align="center">Thanks for checking out our repo, show us some ❤️ by giving our repo a ⭐️!</p>
