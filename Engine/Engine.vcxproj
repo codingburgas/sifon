@@ -29,14 +29,20 @@
     <ClCompile Include="Source\Managers\AppManager.cpp" />
     <ClCompile Include="Source\MapReader.cpp" />
     <ClCompile Include="Source\SceneReader.cpp" />
-    <ClCompile Include="Source\UIElement.cpp" />
+    <ClCompile Include="Source\UI\Button.cpp" />
+    <ClCompile Include="Source\UI\Carousel.cpp" />
+    <ClCompile Include="Source\UI\CarouselElement.cpp" />
+    <ClCompile Include="Source\UI\MainMenuButton.cpp" />
     <ClCompile Include="Source\Util\file_reader.cpp" />
     <ClCompile Include="Source\Util\graphics.cpp" />
     <ClCompile Include="Source\Util\la.cpp" />
+    <ClCompile Include="Source\Util\rtextplus.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Components\CharacterSelectMenu.hpp" />
     <ClInclude Include="Source\Components\Component.hpp" />
     <ClInclude Include="Source\Components\MainMenu.hpp" />
+    <ClInclude Include="Source\Components\MappackMetadataStore.hpp" />
     <ClInclude Include="Source\Components\MapRenderer.hpp" />
     <ClInclude Include="Source\Components\MapStore.hpp" />
     <ClInclude Include="Source\Components\SpriteComponent.hpp" />
@@ -49,12 +55,17 @@
     <ClInclude Include="Source\Managers\EntityManager.hpp" />
     <ClInclude Include="Source\Managers\AppManager.hpp" />
     <ClInclude Include="Source\SceneReader.hpp" />
-    <ClInclude Include="Source\UIElement.hpp" />
+    <ClInclude Include="Source\UI\Button.hpp" />
+    <ClInclude Include="Source\UI\Carousel.hpp" />
+    <ClInclude Include="Source\UI\CarouselElement.hpp" />
+    <ClInclude Include="Source\UI\UIElement.hpp" />
+    <ClInclude Include="Source\UI\MainMenuButton.hpp" />
     <ClInclude Include="Source\Util\file_reader.hpp" />
     <ClInclude Include="Source\Util\graphics.hpp" />
     <ClInclude Include="Source\Util\json.hpp" />
     <ClInclude Include="Source\Util\la.hpp" />
     <ClInclude Include="Source\MapReader.hpp" />
+    <ClInclude Include="Source\Util\rtextplus.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

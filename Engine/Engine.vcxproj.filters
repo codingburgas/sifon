@@ -54,9 +54,6 @@
     <ClCompile Include="Source\SceneReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UIElement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Components\UIComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -73,6 +70,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Util\file_reader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\MainMenuButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\Carousel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\CarouselElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Util\rtextplus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI\Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -116,7 +128,7 @@
     <ClInclude Include="Source\Components\UIComponent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\UIElement.hpp">
+    <ClInclude Include="Source\UI\UIElement.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Components\MapStore.hpp">
@@ -135,6 +147,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Components\UIBuilder.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI\MainMenuButton.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI\Carousel.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI\CarouselElement.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Util\rtextplus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\CharacterSelectMenu.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\MappackMetadataStore.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI\Button.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

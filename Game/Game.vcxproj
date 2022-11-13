@@ -147,6 +147,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\scenes\character_selection_scene.json" />
     <None Include="res\scenes\first_scene.json" />
     <None Include="res\scenes\main_menu_scene.json" />
     <None Include="res\scenes\second_scene.json" />
