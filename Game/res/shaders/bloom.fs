@@ -9,41 +9,28 @@ uniform sampler2D texture0;
 uniform vec4 colDiffuse;
 
 uniform vec2 res;
-
-// GAUSSIAN BLUR SETTINGS {{{
-uniform float directions /* = 32.0 */; // BLUR DIRECTIONS (Default 16.0 - More is better but slower)
-uniform float quality /* = 7.0 */; // BLUR QUALITY (Default 4.0 - More is better but slower)
-uniform float size /* = 32.0 */; // BLUR SIZE (Radius)
-// GAUSSIAN BLUR SETTINGS }}}
+uniform float size;
 
 // Output fragment color
 out vec4 finalColor;
 
 void main()
 {
-
-//const float directions = 32.0; // BLUR DIRECTIONS (Default 16.0 - More is better but slower)
-//const float quality = 7.0; // BLUR QUALITY (Default 4.0 - More is better but slower)
-//const float size = 32.0; // BLUR SIZE (Radius)
-    float Pi = 6.28318530718; // Pi*2
-   
-    vec2 Radius = size/res.xy;
-    
-    // Normalized pixel coordinates (from 0 to 1)
-    vec2 uv = fragTexCoord;
-    // Pixel colour
-    vec4 Color = texture(texture0, uv);
-    
-    // Blur calculations
-    for( float d=0.0; d<Pi; d+=Pi/directions)
-    {
-		for(float i=1.0/quality; i<=1.0; i+=1.0/quality)
-        {
-			Color += texture( texture0, uv+vec2(cos(d),sin(d))*Radius*i);		
-        }
+  vec2 pos = fragTexCoord*2.0-1.0;
+  float x, y, xx, yy, rr = size * size, dx, dy, w, w0;
+  w0 = 0.3780 / pow(size, 1.975);
+  vec2 p;
+  vec4 col = vec4(0.0, 0.0, 0.0, 0.0);
+  for (dx = 1.0 / res.x, x = -size, p.x = 0.5 + (pos.x * 0.5) + (x * dx); x <= size; x++, p.x += dx) {
+    xx = x * x;
+    for (dy = 1.0 / res.y, y = -size, p.y = 0.5 + (pos.y * 0.5) + (y * dy); y <= size; y++, p.y += dy) {
+      yy = y * y;
+      if (xx + yy <= rr)
+      {
+        w = w0 * exp((-xx - yy) / (2.0 * rr));
+        col += texture2D(texture0, p) * w;
+      }
     }
-    
-    // Output to screen
-    Color /= quality * directions - 15.0;
-    finalColor =  Color;
+  }
+  finalColor = col;
 }

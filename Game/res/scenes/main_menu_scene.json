@@ -1,5 +1,14 @@
 [
   {
+    "DestroyOnReload": false,
+    "TagName": "MappackMetadata",
+    "Components": {
+      "MappackMetadataStore": {
+        "MetadataPath": "res/mappacks/Bulgaria/metadata.json"
+      }
+    }
+  },
+  {
     "Components": {
       "MainMenu": {}
     }
