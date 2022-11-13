@@ -6,6 +6,8 @@
 #include "Components/MapStore.hpp"
 #include "Components/MapRenderer.hpp"
 #include "Components/MainMenu.hpp"
+#include "Components/MappackMetadataStore.hpp"
+#include "Components/CharacterSelectMenu.hpp"
 
 #include "Util/file_reader.hpp"
 #include "Util/json.hpp"
@@ -100,6 +102,18 @@ void InitSceneFromFile(const std::string fPath)
                 auto cmp = ECS::CreateComponent<MapRenderer>();
 
                 component["MapStoreEntityTag"].get_to(cmp->m_MapStoreEntityTag);
+
+                entity->AddComponent(cmp);
+            }
+            else if (name == "CharacterSelectMenu")
+            {
+                entity->AddComponent(ECS::CreateComponent<CharacterSelectMenu>());
+            }
+            else if (name == "MappackMetadataStore")
+            {
+                auto cmp = ECS::CreateComponent<MappackMetadataStore>();
+
+                component["MetadataPath"].get_to(cmp->m_MetadataPath);
 
                 entity->AddComponent(cmp);
             }
