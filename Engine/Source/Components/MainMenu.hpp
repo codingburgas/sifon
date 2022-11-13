@@ -1,8 +1,9 @@
 #pragma once
 
-#include <map>
+#include <vector>
 #include <string>
 #include "./UIBuilder.hpp"
+#include "../UI/MainMenuButton.hpp"
 
 class MainMenu : public UIBuilder
 {
@@ -11,8 +12,8 @@ public:
 
 	void Build(std::shared_ptr<UILayer>& uiLayer) override
 	{
-		float currentYPos = GetScreenHeight() / 2.f - MainMenuButton::s_FontSize * m_ButtonMap.size() / 2.f;
-		for (auto& [text, callback] : m_ButtonMap)
+		float currentYPos = GetScreenHeight() / 2.f - MainMenuButton::s_FontSize * m_Buttons.size() / 2.f;
+		for (auto& [text, callback] : m_Buttons)
 		{
 			auto button = std::make_shared<MainMenuButton>(text, 0.f, callback);
 			button->m_Position.x = MainMenuButton::s_LeftPadding;
@@ -23,10 +24,15 @@ public:
 	}
 
 private:
-	const std::map<std::string, std::function<void()>> m_ButtonMap
-	{
-		std::pair<std::string, std::function<void()>> {"PLAY", []() { AppManager::GetInstance()->ChangeScene("play_menu_scene.json"); }},
-		std::pair<std::string, std::function<void()>> {"MODES", []() { AppManager::GetInstance()->ChangeScene("modes_menu_scene.json"); }},
-		std::pair<std::string, std::function<void()>> {"SETTINGS", []() { AppManager::GetInstance()->ChangeScene("settings_menu_scene.json"); }}
+
+	struct Button {
+		std::string text;
+		std::function<void()> callback;
+	};
+
+	const std::vector<Button> m_Buttons{
+		Button {"PLAY", []() { AppManager::GetInstance()->ChangeScene("res/scenes/character_selection_scene.json"); }},
+		Button {"SETTINGS", []() { AppManager::GetInstance()->ChangeScene("settings_menu_scene.json"); }},
+		Button {"TUTORIAL", []() { AppManager::GetInstance()->ChangeScene("tutorial_scene.json"); }}
 	};
 };

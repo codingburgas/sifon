@@ -1,25 +1,11 @@
-﻿#pragma once
+#pragma once
 
 #include "raylib.h"
-#include "./Util/graphics.hpp"
+#include "../Util/graphics.hpp"
+#include "./UIElement.hpp"
 #include <memory>
 #include <functional>
 #include <stdexcept>
-
-// The UIElement represents a singular part of a collection of elements (a.k.a. UILayer).
-// Each UIElement has its own Draw function and handles user input by itself (if needed).
-class UIElement
-{
-public:
-	Vector2 m_Position{};
-
-	UIElement() = default;
-
-	virtual ~UIElement() = default;
-
-	virtual void Draw() {};
-	virtual Vector2 GetSize() = 0;
-};
 
 class MainMenuButton : public UIElement
 {
@@ -30,12 +16,11 @@ private:
 	std::function<void()> m_Callback = []() {};
 	float m_CenterOffset = 0.f;
 
-	float m_InterpolatedSize = 0.f;
 	float m_Time = 0.f;
 
 	CShader m_BloomShader;
 	CTexture m_ShaderRenderTexture{};
-	
+
 public:
 	MainMenuButton(std::string text, float centerOffset, std::function<void()> callback);
 
@@ -46,9 +31,9 @@ public:
 	{
 		UnloadFont(m_Font);
 	}
-	
+
 	// Public static styling of the button
-	
+
 	// Font path
 	static std::string s_FontPath;
 	// Font size

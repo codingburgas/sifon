@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../UIElement.hpp"
+#include "./UI/UIElement.hpp"
 #include "./UIComponent.hpp"
 #include "./Component.hpp"
 #include "../Managers/ECSManager.hpp"

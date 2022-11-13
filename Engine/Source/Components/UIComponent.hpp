@@ -1,8 +1,8 @@
 ﻿#include "../Util/la.hpp"
-#include "../UIElement.hpp"
+#include "../UI/UIElement.hpp"
 #include "Component.hpp"
 
-#include <unordered_set>
+#include <vector>
 
 // The UILayer's purpose is to store UIElement(s) and render them (by calling Draw()).
 // Input handling is done separately in the UIElement itself.
@@ -15,7 +15,8 @@ public:
 	void OnUpdate() override;
 
 	void PushElement(std::shared_ptr<UIElement> element);
+	void ClearElements();
 
 private:
-	std::unordered_set<std::shared_ptr<UIElement>> m_Elements;
+	std::vector<std::shared_ptr<UIElement>> m_Elements;
 };

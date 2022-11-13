@@ -1,7 +1,6 @@
 ﻿#include "UIComponent.hpp"
-#include "TransformComponent2D.hpp"
 
-#include "../UIElement.hpp"
+#include "../UI/UIElement.hpp"
 
 void UILayer::OnUpdate()
 {
@@ -13,5 +12,10 @@ void UILayer::OnUpdate()
 
 void UILayer::PushElement(std::shared_ptr<UIElement> element)
 {
-	m_Elements.insert(element);
+	m_Elements.push_back(element);
+}
+
+void UILayer::ClearElements()
+{
+	m_Elements.clear();
 }
