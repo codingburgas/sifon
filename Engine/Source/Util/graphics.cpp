@@ -1,5 +1,4 @@
 #include "graphics.hpp"
-#include "../Managers/AppManager.hpp"
 #include "../config.h"
 
 // lol, remember that :: is scope resolution operator

@@ -4,6 +4,7 @@
 #include <memory>
 #include <any>
 #include <unordered_map>
+#include <string>
 #include "../Managers/AppManager.hpp"
 #include "la.hpp"
 #include "raylib.h"
