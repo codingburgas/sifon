@@ -8,6 +8,8 @@
 #include <map>
 #include <cassert>
 
+#define FACTORS_COUNT 8
+
 struct Metadata
 {
 	enum Factor
@@ -29,6 +31,8 @@ struct Metadata
 		std::string m_ImagePath;
 		std::map<Factor, float> m_Boosts;
 	};
+
+	std::string m_GeoJsonNameKey;
 
 	std::string m_Name;
 	std::vector<Character> m_Characters;
@@ -53,7 +57,8 @@ public:
 		assert(jsonMeta.is_object() && "Invalid Mappack Metadata JSON File!");
 
 		jsonMeta["name"].get_to<std::string>(m_Metadata.m_Name);
-		
+		jsonMeta["geoJsonNameKey"].get_to<std::string>(m_Metadata.m_GeoJsonNameKey);
+
 		assert(jsonMeta["characters"].is_array() && "Invalid Mappack Metadata JSON File!");
 		for (auto& character : jsonMeta["characters"])
 		{
@@ -67,13 +72,15 @@ public:
 			{
 				boost.get_to(sCharacter.m_Boosts[(Metadata::Factor)i]);
 				i++;
+				if (i > FACTORS_COUNT - 1)
+					break;
 			}
 
 			m_Metadata.m_Characters.push_back(sCharacter);
 		}
 	};
 
-	Metadata GetMetadata() { return m_Metadata; }
+	const Metadata& GetMetadata() { return m_Metadata; }
 
 	std::string GetMappackPath()
 	{
