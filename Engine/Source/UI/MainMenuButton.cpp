@@ -20,8 +20,8 @@ Vector2 MainMenuButton::GetSize()
 	return MeasureTextEx(m_Font, m_Text.c_str(), s_FontSize, 1.f);
 }
 
-MainMenuButton::MainMenuButton(std::string text, float centerOffset, std::function<void()> callback)
-	: m_Text(text), m_CenterOffset(centerOffset), m_Callback(callback)
+MainMenuButton::MainMenuButton(std::string text, std::function<void()> callback)
+	: m_Text(text), m_Callback(callback)
 {
 	// Load font
 	m_Font = LoadFontEx(s_FontPath.c_str(), static_cast<int>(s_FontSize), nullptr, 0);

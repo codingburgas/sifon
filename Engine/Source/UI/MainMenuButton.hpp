@@ -14,7 +14,6 @@ private:
 
 	std::string m_Text{};
 	std::function<void()> m_Callback = []() {};
-	float m_CenterOffset = 0.f;
 
 	float m_Time = 0.f;
 
@@ -22,7 +21,7 @@ private:
 	CTexture m_ShaderRenderTexture{};
 
 public:
-	MainMenuButton(std::string text, float centerOffset, std::function<void()> callback);
+	MainMenuButton(std::string text, std::function<void()> callback);
 
 	void Draw() override;
 	Vector2 GetSize() override;
