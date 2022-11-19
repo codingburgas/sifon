@@ -269,8 +269,57 @@ float GameManager::GetWinProbability()
 
 void GameManager::MakeRevolution()
 {
-	// TODO: implement
-	// NOTE: use GetWinProbability
+	m_State.m_Date.AdvanceMonths(1);
+
+	int money = GetMoneyAmount();
+	int manpower = GetResourceAmount(GameState::Resource::MANPOWER);
+	int melee = GetResourceAmount(GameState::Resource::MELEE);
+	int food = GetResourceAmount(GameState::Resource::FOOD_WATER);
+	int clothes = GetResourceAmount(GameState::Resource::CLOTHES);
+	float hope = GetCommunityPercent(GameState::CommunityResource::HOPE);
+	float loyalty = GetCommunityPercent(GameState::CommunityResource::LOYALTY);
+	float moral = GetCommunityPercent(GameState::CommunityResource::MORAL);
+
+	if (GetWinProbability() >= m_State.m_PercentToWin)
+	{
+		m_State.m_WonRevolutionsCount++;
+		m_State.m_LastRevolutionWon = true;
+
+		int newMoney = rand() % 20000;
+		float newHope = hope + rand() % 40 / 100.f;
+		float newLoyalty = loyalty + rand() % 40 / 100.f;
+		float newMoral = moral + rand() % 40 / 100.f;
+
+		AlterMoney(newMoney);
+		m_State.m_Community.m_HopePercent = std::clamp(newHope, 0.f, 1.f);
+		m_State.m_Community.m_LoyaltyPercent = std::clamp(newLoyalty, 0.f, 1.f);
+		m_State.m_Community.m_MoralPercent = std::clamp(newMoral, 0.f, 1.f);
+	}
+	else
+	{
+		m_State.m_LostRevolutionsCount++;
+		m_State.m_LastRevolutionWon = false;
+
+		int newMoney = rand() % 20000;
+		float newHope = hope - rand() % 40 / 100.f;
+		float newLoyalty = loyalty - rand() % 40 / 100.f;
+		float newMoral = moral - rand() % 40 / 100.f;
+
+		AlterMoney(-newMoney);
+		m_State.m_Community.m_HopePercent = std::clamp(newHope, 0.f, 1.f);
+		m_State.m_Community.m_LoyaltyPercent = std::clamp(newLoyalty, 0.f, 1.f);
+		m_State.m_Community.m_MoralPercent = std::clamp(newMoral, 0.f, 1.f);
+	}
+
+	int newManpower = manpower - rand() % 2000;
+	int newMelee = melee - rand() % 2000;
+	int newFood = food - rand() % 2000;
+	int newClothes = clothes - rand() % 2000;
+
+	m_State.m_Resources.m_Manpower = std::clamp(newManpower, 0, newManpower);
+	m_State.m_Resources.m_MeleeAmount = std::clamp(newMelee, 0, newMelee);
+	m_State.m_Resources.m_Food = std::clamp(newFood, 0, newFood);
+	m_State.m_Resources.m_Clothes = std::clamp(newClothes, 0, newClothes);
 }
 
 void GameManager::BuyResources(GameState::Resource resourceType, int amount)
