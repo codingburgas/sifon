@@ -15,7 +15,6 @@ struct GameState
 {
 	std::array<float, FACTORS_COUNT> m_FactorScales;
 	std::string m_CharacterName;
-	std::string m_CountryCurrency;
 
 	std::vector<std::string> m_RegionOrganisations;
 
@@ -38,6 +37,10 @@ struct GameState
 		std::string m_Region;
 		bool m_IsActive = false;
 	} m_CurrentRevolution;
+
+	const float m_PercentToWin = 70.f;
+
+	bool m_LastRevolutionWon;
 
 	int m_WonRevolutionsCount = 0;
 	int m_LostRevolutionsCount = 0;
@@ -115,7 +118,7 @@ public:
 
 	// Actions
 	void MakeOrganisationInRegion(std::string region);
-	void MakeRevolutionInRegion(std::string region);
+	void MakeRevolution();
 	void BuyResources(GameState::Resource resourceType, int amount);
 
 	void SetPaused(bool isPaused);

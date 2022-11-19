@@ -243,10 +243,31 @@ float GameManager::GetCommunityPercent(GameState::CommunityResource resourceType
 
 float GameManager::GetWinProbability()
 {
+	auto factors = m_State.m_FactorScales;
+
+	float weather = GetTodayWeather();
+
+	float manpower = GetResourceAmount(GameState::Resource::MANPOWER) * factors[2];
+	float melee = GetResourceAmount(GameState::Resource::MELEE) * factors[3];
+	float food = GetResourceAmount(GameState::Resource::FOOD_WATER) * factors[6];
+	float clothes = GetResourceAmount(GameState::Resource::CLOTHES) * factors[7];
+
+	float hope = GetCommunityPercent(GameState::CommunityResource::HOPE) * factors[4];
+	float loyalty = GetCommunityPercent(GameState::CommunityResource::LOYALTY) * factors[1];
+	float moral = GetCommunityPercent(GameState::CommunityResource::MORAL) * factors[0];
+
+	float weatherPercent = - (12.5f - weather) / 2;
+	float manpowerPercent = manpower / 120 + melee / manpower * 100 / 4;
+	float necessitiesPercent = ((food + clothes) / (manpower * 2) - 1) * 100;
+	float communityPercent = - (0.5f - hope) / 2 - (0.5f - loyalty) / 2 - (0.5f - moral) / 2;
+	float randomPercent = rand() % 18 - 9.f;
+
+	float totalPercent = weatherPercent + randomPercent + manpowerPercent + necessitiesPercent;
 	
+	return totalPercent;
 }
 
-void GameManager::MakeRevolutionInRegion(std::string region)
+void GameManager::MakeRevolution()
 {
 	// TODO: implement
 	// NOTE: use GetWinProbability
