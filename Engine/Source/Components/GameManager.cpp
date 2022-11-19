@@ -324,6 +324,34 @@ void GameManager::MakeRevolution()
 
 void GameManager::BuyResources(GameState::Resource resourceType, int amount)
 {
-	// TODO: implement
-	// NOTE: use GetMoneyAmount to compare, AlterMoney
+	const int meleeCost = 10;
+	const int foodCost = 3;
+	const int clothesCost = 4;
+
+	int resourceCost = amount;
+
+	switch (resourceType)
+	{
+	case GameState::Resource::MELEE:
+		resourceCost *= meleeCost;
+
+		if (GetMoneyAmount() - resourceCost < 0) return;
+
+		m_State.m_Resources.m_MeleeAmount += amount;
+		break;
+	case GameState::Resource::FOOD_WATER:
+		resourceCost *= foodCost;
+
+		if (GetMoneyAmount() - resourceCost < 0) return;
+
+		m_State.m_Resources.m_Food += amount;
+		break;
+	case GameState::Resource::CLOTHES:
+		resourceCost *= clothesCost;
+
+		if (GetMoneyAmount() - resourceCost < 0) return;
+
+		m_State.m_Resources.m_Clothes += amount;
+		break;
+	}
 }
