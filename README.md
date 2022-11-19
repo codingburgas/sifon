@@ -50,7 +50,7 @@
 
 ## 📄 Documents
 ### QA Documentation
-  - [Test Plan]()
+  - [Test Plan](https://github.com/codingburgas/2223-educational-traveling-sifon/blob/docs/Documentation/siPhone%20-%20Test%20plan.docx)
   - [QA Documentation]()
 
 ### Code & Team Documentation
