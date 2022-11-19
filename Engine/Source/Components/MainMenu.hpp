@@ -15,7 +15,7 @@ public:
 		float currentYPos = GetScreenHeight() / 2.f - MainMenuButton::s_FontSize * m_Buttons.size() / 2.f;
 		for (auto& [text, callback] : m_Buttons)
 		{
-			auto button = std::make_shared<MainMenuButton>(text, 0.f, callback);
+			auto button = std::make_shared<MainMenuButton>(text, callback);
 			button->m_Position.x = MainMenuButton::s_LeftPadding;
 			button->m_Position.y = currentYPos;
 			currentYPos += MainMenuButton::s_FontSize;
@@ -33,6 +33,7 @@ private:
 	const std::vector<Button> m_Buttons{
 		Button {"PLAY", []() { AppManager::GetInstance()->ChangeScene("res/scenes/character_selection_scene.json"); }},
 		Button {"SETTINGS", []() { AppManager::GetInstance()->ChangeScene("settings_menu_scene.json"); }},
-		Button {"TUTORIAL", []() { AppManager::GetInstance()->ChangeScene("tutorial_scene.json"); }}
+		Button {"TUTORIAL", []() { AppManager::GetInstance()->ChangeScene("tutorial_scene.json"); }},
+		Button {"EXIT", []() { AppManager::GetInstance()->Quit(); }}
 	};
 };
