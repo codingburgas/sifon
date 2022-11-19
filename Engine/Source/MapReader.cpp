@@ -2,6 +2,7 @@
 
 #include "MapReader.hpp"
 #include "Util/file_reader.hpp"
+#include <algorithm>
 
 void MapReader::Load(const std::string fPath)
 {
@@ -13,7 +14,8 @@ void MapReader::Load(const std::string fPath)
 
     assert(json.is_object() && "Passed JSON File isn't an object!");
     Parse(json);
-    normalisePoints();
+    NormalisePoints();
+    CalculateRegionCenters();
 }
 
 void MapReader::Parse(const nlohmann::json json)
@@ -109,7 +111,29 @@ std::vector<Polygon> MapReader::ParseMultiPolygon(const nlohmann::json json)
     return polygons;
 }
 
-void MapReader::normalisePoints()
+void MapReader::CalculateRegionCenters()
+{
+    for (auto& [name, polygons] : m_CountryTable)
+    {
+        float xSum = 0.f;
+        float ySum = 0.f;
+        size_t size = 0;
+
+        for (auto& polygon : polygons)
+        {
+            size += polygon.size();
+            for (auto& point : polygon)
+            {
+                xSum += point.x;
+                ySum += point.y;
+            }
+        }
+
+        m_RegionCenters[name] = Vec2f{xSum / size, ySum / size};
+    }
+}
+
+void MapReader::NormalisePoints()
 {
     {
         auto& firstPoint = (*m_CountryTable.begin()).second[0][0];
@@ -118,20 +142,30 @@ void MapReader::normalisePoints()
     }
 
     // finding min and max point in currently parsed map
-    for (auto& [name, polygons] : m_CountryTable)
     {
-        for (auto& polygon : polygons)
-        {
-            for (auto& point : polygon)
-            {
-                if (point.x < m_MinCoord.x) m_MinCoord.x = point.x;
-                if (point.y < m_MinCoord.y) m_MinCoord.y = point.y;
+        std::vector<float> xComponents, yComponents;
 
-                if (point.x > m_MaxCoord.x) m_MaxCoord.x = point.x;
-                if (point.y > m_MaxCoord.y) m_MaxCoord.y = point.y;
+        for (auto& [name, polygons] : m_CountryTable)
+        {
+            for (auto& polygon : polygons)
+            {
+                for (auto& point : polygon)
+                {
+                    xComponents.push_back(point.x);
+                    yComponents.push_back(point.y);
+                }
             }
         }
+
+        m_MinCoord.x = *std::min_element(xComponents.begin(), xComponents.end());
+        m_MinCoord.y = *std::min_element(yComponents.begin(), yComponents.end());
+
+        m_MaxCoord.x = *std::max_element(xComponents.begin(), xComponents.end());
+        m_MaxCoord.y = *std::max_element(yComponents.begin(), yComponents.end());
     }
+
+    auto mapResolution = Vec2f{ m_MaxCoord.x - m_MinCoord.x, m_MaxCoord.y - m_MinCoord.y };
+    auto ratio = mapResolution.x / mapResolution.y;
 
     // remapping the coordinates to the max and min points (normalising)
     for (auto& [name, polygons] : m_CountryTable)

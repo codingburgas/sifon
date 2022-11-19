@@ -43,17 +43,24 @@ public:
         return m_CountryTable;
     }
 
+    std::unordered_map<std::string, Vec2f>& GetRegionCenters()
+    {
+        return m_RegionCenters;
+    }
+
 private:
     float mapInt(float x, float inMin, float inMax, float outMin, float outMax)
     {
         return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
     }
 
-    void normalisePoints();
+    void NormalisePoints();
+    void CalculateRegionCenters();
 
     std::unordered_map<std::string, std::vector<Polygon>> m_CountryTable;
-    Vec2f m_MinCoord{};
-    Vec2f m_MaxCoord{};
+    std::unordered_map<std::string, Vec2f> m_RegionCenters;
+    Vec2f m_MinCoord{180.f, 180.f};
+    Vec2f m_MaxCoord{-180.f, -180.f};
     Vec2f m_MinNormalised{ 0, 0 };
     Vec2f m_MaxNormalised{ 1280, 720 };
     std::string m_NameKey{};
