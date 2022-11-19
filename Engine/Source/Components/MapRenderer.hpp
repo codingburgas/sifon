@@ -1,7 +1,9 @@
 #pragma once
 
+#include "../Managers/EntityManager.hpp"
 #include "Component.hpp"
 #include "MapStore.hpp"
+#include "GameManager.hpp"
 
 class MapRenderer : public Component
 {
