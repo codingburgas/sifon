@@ -54,7 +54,7 @@
   - [QA Documentation]()
 
 ### Code & Team Documentation
-  - [GitBook]()
+  - [GitBook](https://app.gitbook.com/o/OpmGqYiGz8873Zug9PxA/s/5bKBckpAk4XhIYbUiCDD/)
   - [Doxygen]()
   - [Team Documentation]()
 
