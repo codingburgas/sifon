@@ -9,8 +9,15 @@
 #include <memory>	
 #include <iostream>
 
+#include <cstdlib>
+#include <ctime>
+
+// from here on:
+// go big or go home
 int main()
 {	
+	srand(time(0));
+
 	AppManager* appManager = AppManager::GetInstance();
 
 	SetConfigFlags(FLAG_VSYNC_HINT);
