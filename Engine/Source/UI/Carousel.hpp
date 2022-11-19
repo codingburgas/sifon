@@ -16,7 +16,8 @@ public:
 	static float s_Spacing;
 	static Vector2 s_NavButtonSize;
 
-	Carousel(std::vector<std::shared_ptr<CarouselElement>> elements) : m_Elements(elements), m_StartButton("start", GREEN), m_BackButton("back", RED)
+	Carousel(std::vector<std::shared_ptr<CarouselElement>> elements)
+		: m_Elements(elements), m_StartButton("start", { 0, 214, 85, 255 }), m_BackButton("back", { 255, 65, 65, 255})
 	{
 		AdjustCamera(m_Camera, m_SelectedElement);
 		AdjustElements(m_Elements);

@@ -87,7 +87,7 @@ void Carousel::HandleInput()
 	}
 	else if (m_StartButton.IsButtonClicked() || IsKeyPressed(KEY_ENTER))
 	{
-		printf("INFO: Start button just got clicked lol\n");
+		AppManager::GetInstance()->ChangeScene("res/scenes/game_scene.json");
 	}
 }
 
