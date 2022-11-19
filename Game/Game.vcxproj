@@ -150,7 +150,7 @@
     <None Include="res\scenes\character_selection_scene.json" />
     <None Include="res\scenes\first_scene.json" />
     <None Include="res\scenes\main_menu_scene.json" />
-    <None Include="res\scenes\second_scene.json" />
+    <None Include="res\scenes\game_scene.json" />
     <None Include="res\shaders\bloom.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

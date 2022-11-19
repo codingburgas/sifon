@@ -9,6 +9,13 @@
     }
   },
   {
+    "DestroyOnReload": false,
+    "TagName": "GameController",
+    "Components": {
+      "GameManager": {}
+    }
+  },
+  {
     "Components": {
       "MainMenu": {}
     }
