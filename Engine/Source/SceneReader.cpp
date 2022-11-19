@@ -8,6 +8,8 @@
 #include "Components/MainMenu.hpp"
 #include "Components/MappackMetadataStore.hpp"
 #include "Components/CharacterSelectMenu.hpp"
+#include "Components/GameUI.hpp"
+#include "Components/GameManager.hpp"
 
 #include "Util/file_reader.hpp"
 #include "Util/json.hpp"
@@ -89,8 +91,6 @@ void InitSceneFromFile(const std::string fPath)
             {
                 auto cmp = ECS::CreateComponent<MapStore>();
 
-                component["FilePath"].get_to(cmp->m_FilePath);
-
                 entity->AddComponent(cmp);
             }
             else if (name == "MainMenu")
@@ -116,6 +116,16 @@ void InitSceneFromFile(const std::string fPath)
                 component["MetadataPath"].get_to(cmp->m_MetadataPath);
 
                 entity->AddComponent(cmp);
+            }
+            else if (name == "GameUI")
+            {
+                auto cmp = ECS::CreateComponent<GameUI>();
+                
+                entity->AddComponent(cmp);
+            }
+            else if (name == "GameManager")
+            {
+                entity->AddComponent(ECS::CreateComponent<GameManager>());
             }
             else continue;
 

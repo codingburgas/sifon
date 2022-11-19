@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Components\Component.cpp" />
+    <ClCompile Include="Source\Components\GameManager.cpp" />
     <ClCompile Include="Source\Components\MapRenderer.cpp" />
     <ClCompile Include="Source\Components\MapStore.cpp" />
     <ClCompile Include="Source\Components\SpriteComponent.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="Source\Managers\AppManager.cpp" />
     <ClCompile Include="Source\MapReader.cpp" />
     <ClCompile Include="Source\SceneReader.cpp" />
+    <ClCompile Include="Source\UI\ActionsMenu.cpp" />
     <ClCompile Include="Source\UI\Button.cpp" />
     <ClCompile Include="Source\UI\Carousel.cpp" />
     <ClCompile Include="Source\UI\CarouselElement.cpp" />
@@ -41,10 +43,12 @@
   <ItemGroup>
     <ClInclude Include="Source\Components\CharacterSelectMenu.hpp" />
     <ClInclude Include="Source\Components\Component.hpp" />
+    <ClInclude Include="Source\Components\GameUI.hpp" />
     <ClInclude Include="Source\Components\MainMenu.hpp" />
     <ClInclude Include="Source\Components\MappackMetadataStore.hpp" />
     <ClInclude Include="Source\Components\MapRenderer.hpp" />
     <ClInclude Include="Source\Components\MapStore.hpp" />
+    <ClInclude Include="Source\Components\GameManager.hpp" />
     <ClInclude Include="Source\Components\SpriteComponent.hpp" />
     <ClInclude Include="Source\Components\TransformComponent2D.hpp" />
     <ClInclude Include="Source\Components\UIBuilder.hpp" />
@@ -55,9 +59,11 @@
     <ClInclude Include="Source\Managers\EntityManager.hpp" />
     <ClInclude Include="Source\Managers\AppManager.hpp" />
     <ClInclude Include="Source\SceneReader.hpp" />
+    <ClInclude Include="Source\UI\ActionsMenu.hpp" />
     <ClInclude Include="Source\UI\Button.hpp" />
     <ClInclude Include="Source\UI\Carousel.hpp" />
     <ClInclude Include="Source\UI\CarouselElement.hpp" />
+    <ClInclude Include="Source\UI\PauseMenu.hpp" />
     <ClInclude Include="Source\UI\UIElement.hpp" />
     <ClInclude Include="Source\UI\MainMenuButton.hpp" />
     <ClInclude Include="Source\Util\file_reader.hpp" />
@@ -169,6 +175,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)raylib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <ControlFlowGuard>false</ControlFlowGuard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -178,7 +185,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -188,6 +195,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)raylib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
     </ClCompile>
     <Link>
       <SubSystem>

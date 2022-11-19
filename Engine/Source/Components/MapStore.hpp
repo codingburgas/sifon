@@ -14,4 +14,5 @@ public:
 
 	std::string m_FilePath{};
 	std::unordered_map<std::string, std::vector<Polygon>> m_CountryTable{};
+	std::unordered_map<std::string, Vec2f> m_RegionCenters{};
 };
