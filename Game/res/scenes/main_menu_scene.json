@@ -16,6 +16,13 @@
     }
   },
   {
+    "TagName": "MapStore",
+    "DestroyOnReload": false,
+    "Components": {
+      "MapStore": {}
+    }
+  },
+  {
     "Components": {
       "MainMenu": {},
       "TransformComponent2D": {

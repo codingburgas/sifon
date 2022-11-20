@@ -1,12 +1,5 @@
 [
   {
-    "TagName": "MapStore",
-    "DestroyOnReload": true,
-    "Components": {
-      "MapStore": {}
-    }
-  },
-  {
     "TagName": "Game",
     "DestroyOnReload": true,
     "Components": {
