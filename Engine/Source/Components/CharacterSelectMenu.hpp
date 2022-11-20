@@ -29,7 +29,7 @@ public:
 		{
 			elements.push_back(std::make_shared<CarouselElement>(
 				(std::filesystem::path(mappackPath) / character.m_ImagePath).string(),
-				titleFont, descFont, character.m_Name, character.m_Description));
+				titleFont, descFont, character.m_Name, character.m_Description, character.m_BoostPercents));
 		}
 
 		auto carousel = std::make_shared<Carousel>(elements);

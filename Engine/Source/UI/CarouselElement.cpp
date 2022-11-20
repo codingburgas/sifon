@@ -5,7 +5,7 @@ float CarouselElement::s_SizePercentage = 0.725f;
 float CarouselElement::s_InnerPadding = 40.f;
 
 int CarouselElement::s_TitleFontSize = 87;
-int CarouselElement::s_DescFontSize = 31;
+int CarouselElement::s_DescFontSize = 32;
 
 // code for fitting image within the square without stretching and leaving no empty spaces as possible
 Vector2 FitRectangleInRectangle(Vector2 inner, Vector2 outer)
@@ -53,8 +53,10 @@ void CarouselElement::DrawText()
 	DrawTextBoxed(m_DescFont, m_Description.c_str(), Rectangle{
 			m_Position.x + m_Size.x / 3.f + s_InnerPadding * 2.f, m_Position.y + s_InnerPadding * 2.f + s_TitleFontSize,
 			m_Size.x / 1.5f - s_InnerPadding * 3.f,
-			m_Size.y - s_InnerPadding * 3.f - s_TitleFontSize
+			m_Size.y + s_InnerPadding - s_TitleFontSize
 		}, static_cast<float>(s_DescFontSize), 1.f, true, WHITE);
+
+	m_StatsViewer.Draw();
 }
 
 void CarouselElement::Draw()
@@ -113,31 +115,6 @@ void CarouselElement::CalculateBlurredImage()
 	EndTextureMode();
 
 	UnloadRenderTexture(imageBuffer);
-}
-
-void CarouselElement::CalculateColors(Color& average, Color& averageComplementary, Image image)
-{
-	unsigned long long rSum = 0, gSum = 0, bSum = 0;
-
-	// traversing through image data to calculate average color
-	for (int i = 0; i < image.width * image.height * 4; i += 4)
-	{
-		rSum += *((unsigned char*)image.data + i);
-		gSum += *((unsigned char*)image.data + i + 1);
-		bSum += *((unsigned char*)image.data + i + 2);
-	}
-
-	rSum /= image.width * image.height;
-	gSum /= image.width * image.height;
-	bSum /= image.width * image.height;
-
-	average.r = static_cast<unsigned char>(rSum);
-	average.g = static_cast<unsigned char>(gSum);
-	average.b = static_cast<unsigned char>(gSum);
-
-	averageComplementary.r = abs(255 - static_cast<int>(rSum));
-	averageComplementary.g = abs(255 - static_cast<int>(gSum));
-	averageComplementary.b = abs(255 - static_cast<int>(bSum));
 }
 
 void CarouselElement::SetTitle(std::string title)

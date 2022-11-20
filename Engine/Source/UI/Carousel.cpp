@@ -1,5 +1,8 @@
 #include "./Carousel.hpp"
 #include "./CarouselElement.hpp"
+#include "../Managers/EntityManager.hpp"
+#include "../Components/Component.hpp"
+#include "../Components/GameManager.hpp"
 
 // Carousel styling
 float Carousel::s_InterpTime = .6f;
@@ -87,6 +90,10 @@ void Carousel::HandleInput()
 	}
 	else if (m_StartButton.IsButtonClicked() || IsKeyPressed(KEY_ENTER))
 	{
+		GET_COMPONENT_FROM(EntityManager::GetInstance()->GetEntityFromTagName("GameController"),
+			GameManager)->LoadCharacterFromMetadataIndex(m_SelectedElement);
+		GET_COMPONENT_FROM(EntityManager::GetInstance()->GetEntityFromTagName("GameController"),
+			GameManager)->LoadStartEndTimeFromMetadata();
 		AppManager::GetInstance()->ChangeScene("res/scenes/game_scene.json");
 	}
 }
@@ -151,6 +158,7 @@ void Carousel::AdjustElements(std::vector<std::shared_ptr<CarouselElement>>& m_E
 	for (auto& element : m_Elements)
 	{
 		element->m_Position = { element->GetSize().x * i + Carousel::s_Spacing * i, 0 };
+		element->m_StatsViewer.m_Position = element->m_Position;
 		i++;
 	}
 }
