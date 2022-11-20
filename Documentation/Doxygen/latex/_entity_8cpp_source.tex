@@ -1,0 +1,71 @@
+\hypertarget{_entity_8cpp_source}{}\doxysection{Entity.\+cpp}
+\label{_entity_8cpp_source}\index{Engine/Source/Entity.cpp@{Engine/Source/Entity.cpp}}
+\mbox{\hyperlink{_entity_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_entity_8hpp}{Entity.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00003}\mbox{\hyperlink{class_entity_ad2f398ea0331cea0f5ddfe0bfb903343}{00003}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_entity_ad2f398ea0331cea0f5ddfe0bfb903343}{Entity::OnEntityCreate}}()}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00008}00008     \textcolor{keywordflow}{while} (!uncreatedComponents.empty())}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00009}00009     \{}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00010}00010         \textcolor{keyword}{auto} component = uncreatedComponents.front();}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00011}00011         }
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00012}00012         assert(boundComponents.find(component-\/>ComponentName()) == boundComponents.end() \&\& \textcolor{stringliteral}{"{}An attempt was made to bind an already existing component type"{}});}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00013}00013         }
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00014}00014         uncreatedComponents.pop();}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00015}00015         component-\/>OnCreate();}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00016}00016         boundComponents[component-\/>ComponentName()] = component;}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00017}00017     \}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00018}00018     \textcolor{comment}{/*for (auto\& [key, component] : boundComponents)}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00019}00019 \textcolor{comment}{    \{}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00020}00020 \textcolor{comment}{        component-\/>OnCreate();}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00021}00021 \textcolor{comment}{    \}*/}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00022}00022 \}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00024}\mbox{\hyperlink{class_entity_aa748d2ae63aea78cf0f7cd5dfd648fb2}{00024}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_entity_aa748d2ae63aea78cf0f7cd5dfd648fb2}{Entity::OnUpdateComponents}}()}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00025}00025 \{}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00029}00029     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& [key, component] : boundComponents)}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00030}00030     \{}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00031}00031         \textcolor{keywordflow}{if} (component-\/>Active)}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00032}00032             component-\/>OnUpdate();}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00033}00033     \}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00034}00034 \}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00036}\mbox{\hyperlink{class_entity_aa6b853ded3f9a70889c1e66d0b7a82e2}{00036}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_entity_aa6b853ded3f9a70889c1e66d0b7a82e2}{Entity::OnUpdateUIComponents}}()}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00037}00037 \{}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00041}00041     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& [key, component] : boundComponents)}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00042}00042     \{}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00043}00043         \textcolor{keywordflow}{if} (component-\/>Active)}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00044}00044             component-\/>OnUI();}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00045}00045     \}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00046}00046 \}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00048}\mbox{\hyperlink{class_entity_a80993c0bb7aec06729e607b895adfe17}{00048}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_entity_a80993c0bb7aec06729e607b895adfe17}{Entity::OnEntityDestroy}}()}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00049}00049 \{}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00053}00053     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& [key, component] : boundComponents)}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00054}00054     \{}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00055}00055         component-\/>OnDestroy();}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00056}00056     \}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00057}00057 \}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00059}\mbox{\hyperlink{class_entity_a533c904fd4e4f40d33ceb528304a241e}{00059}} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_entity_a533c904fd4e4f40d33ceb528304a241e}{Entity::AddComponent}}(std::shared\_ptr<Component> component)}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00060}00060 \{}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00061}00061     assert(component-\/>ComponentName() != \textcolor{keyword}{nullptr} \&\& \textcolor{stringliteral}{"{}An attempt was made to bind an instance of the base Component class"{}});}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00062}00062     assert((component.use\_count() -\/ 1) <= 1 \&\& \textcolor{stringliteral}{"{}An attempt was made to bind a used Component"{}});}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00067}00067     std::string componentName = component-\/>ComponentName();}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00068}00068     assert(boundComponents.find(componentName) == boundComponents.end() \&\& \textcolor{stringliteral}{"{}An attempt was made to bind an already existing component type"{}});}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00069}00069     }
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00070}00070     component-\/>BindToEntity(this-\/>\mbox{\hyperlink{class_entity_a14717332a9b32aaadb5877e1cad3b78d}{GetID}}());}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00071}00071     uncreatedComponents.push(component);}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00072}00072     \textcolor{comment}{//boundComponents[componentName] = component;}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00073}00073 \}}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00075}\mbox{\hyperlink{class_entity_a45d824cb7e107dce25d4bab190a1e169}{00075}} std::shared\_ptr<Component> \mbox{\hyperlink{class_entity_a45d824cb7e107dce25d4bab190a1e169}{Entity::GetComponent}}(std::string componentName)}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00076}00076 \{}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00080}00080     \textcolor{keywordflow}{if} (boundComponents.find(componentName) != boundComponents.end())}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00081}00081         \textcolor{keywordflow}{return} boundComponents[componentName];}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00082}00082     \textcolor{keywordflow}{else} \textcolor{keywordflow}{return} std::shared\_ptr<Component>();}
+\DoxyCodeLine{\Hypertarget{_entity_8cpp_source_l00083}00083 \}}
+
+\end{DoxyCode}

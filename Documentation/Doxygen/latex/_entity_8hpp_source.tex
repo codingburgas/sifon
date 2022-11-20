@@ -1,0 +1,50 @@
+\hypertarget{_entity_8hpp_source}{}\doxysection{Entity.\+hpp}
+\label{_entity_8hpp_source}\index{Engine/Source/Entity.hpp@{Engine/Source/Entity.hpp}}
+\mbox{\hyperlink{_entity_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00001}00001 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00003}00003 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00004}00004 \textcolor{preprocessor}{\#include <memory>}}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00005}00005 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00006}00006 \textcolor{preprocessor}{\#include <list>}}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00007}00007 \textcolor{preprocessor}{\#include <cassert>}}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00008}00008 \textcolor{preprocessor}{\#include <unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00009}00009 \textcolor{preprocessor}{\#include <queue>}}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00011}00011 \textcolor{preprocessor}{\#include "{}Components/Component.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00013}\mbox{\hyperlink{class_entity}{00013}} \textcolor{keyword}{class }\mbox{\hyperlink{class_entity}{Entity}}}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00014}00014 \{}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00015}00015 \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00019}00019     std::unordered\_map<std::string, std::shared\_ptr<Component>> boundComponents\{\};}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00023}00023     std::queue<std::shared\_ptr<Component>> uncreatedComponents\{\};}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00025}00025     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} m\_id;}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00026}00026     }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00027}00027 \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00031}\mbox{\hyperlink{class_entity_a0cd2d2af8f570124a5333cb711f8c0bf}{00031}}     \mbox{\hyperlink{class_entity_a0cd2d2af8f570124a5333cb711f8c0bf}{Entity}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \textcolor{keywordtype}{id}) : m\_id(id) \{\};}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00032}\mbox{\hyperlink{class_entity_a588098978eea6a3486b7361605ff3f0f}{00032}}     \textcolor{keyword}{virtual} \mbox{\hyperlink{class_entity_a588098978eea6a3486b7361605ff3f0f}{\string~Entity}}() \{}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00033}00033         printf(\textcolor{stringliteral}{"{}[EntityManager] Destroyed Entity with id \%lld\(\backslash\)n"{}}, m\_id);}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00034}00034     \}}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00039}00039     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_entity_ad2f398ea0331cea0f5ddfe0bfb903343}{OnEntityCreate}}();}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00044}00044     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_entity_aa748d2ae63aea78cf0f7cd5dfd648fb2}{OnUpdateComponents}}();}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00049}00049     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_entity_aa6b853ded3f9a70889c1e66d0b7a82e2}{OnUpdateUIComponents}}();}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00056}00056     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_entity_a80993c0bb7aec06729e607b895adfe17}{OnEntityDestroy}}();}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00063}00063     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_entity_a533c904fd4e4f40d33ceb528304a241e}{AddComponent}}(std::shared\_ptr<Component> component);}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00072}00072     std::shared\_ptr<Component> \mbox{\hyperlink{class_entity_a45d824cb7e107dce25d4bab190a1e169}{GetComponent}}(std::string componentName);}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00074}\mbox{\hyperlink{class_entity_ada7236e1f173a0d5cf99e443eeb616f3}{00074}}     std::string \mbox{\hyperlink{class_entity_ada7236e1f173a0d5cf99e443eeb616f3}{Tag}} \{\};}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00076}\mbox{\hyperlink{class_entity_a14717332a9b32aaadb5877e1cad3b78d}{00076}}     \textcolor{keyword}{inline} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \mbox{\hyperlink{class_entity_a14717332a9b32aaadb5877e1cad3b78d}{GetID}}() \{ \textcolor{keywordflow}{return} m\_id; \}}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00078}\mbox{\hyperlink{class_entity_a1a6d511b10e390497d5aa76e1cfca601}{00078}}     \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_entity_a1a6d511b10e390497d5aa76e1cfca601}{DestroyOnReload}} = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_entity_8hpp_source_l00079}00079 \};}
+
+\end{DoxyCode}

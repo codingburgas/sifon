@@ -1,0 +1,228 @@
+\hypertarget{class_entity}{}\doxysection{Entity Class Reference}
+\label{class_entity}\index{Entity@{Entity}}
+
+
+{\ttfamily \#include $<$Entity.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_entity_a0cd2d2af8f570124a5333cb711f8c0bf}{Entity}} (unsigned long long id)
+\begin{DoxyCompactList}\small\item\em Create a new object of type entity. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_entity_a588098978eea6a3486b7361605ff3f0f}{$\sim$\+Entity}} ()
+\item 
+void \mbox{\hyperlink{class_entity_ad2f398ea0331cea0f5ddfe0bfb903343}{On\+Entity\+Create}} ()
+\begin{DoxyCompactList}\small\item\em Gets called once whenever the program is initializing itself. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_entity_aa748d2ae63aea78cf0f7cd5dfd648fb2}{On\+Update\+Components}} ()
+\begin{DoxyCompactList}\small\item\em Updates the components once per frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_entity_aa6b853ded3f9a70889c1e66d0b7a82e2}{On\+Update\+UIComponents}} ()
+\begin{DoxyCompactList}\small\item\em Updates the UI components once per frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_entity_a80993c0bb7aec06729e607b895adfe17}{On\+Entity\+Destroy}} ()
+\begin{DoxyCompactList}\small\item\em Gets called when an entity is destroyed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_entity_a533c904fd4e4f40d33ceb528304a241e}{Add\+Component}} (std\+::shared\+\_\+ptr$<$ Component $>$ component)
+\begin{DoxyCompactList}\small\item\em Bind the component parameter as a component of an entity. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ Component $>$ \mbox{\hyperlink{class_entity_a45d824cb7e107dce25d4bab190a1e169}{Get\+Component}} (std\+::string component\+Name)
+\begin{DoxyCompactList}\small\item\em Gets the wanted component. \end{DoxyCompactList}\item 
+unsigned long long \mbox{\hyperlink{class_entity_a14717332a9b32aaadb5877e1cad3b78d}{Get\+ID}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{class_entity_ada7236e1f173a0d5cf99e443eeb616f3}{Tag}} \{\}
+\item 
+bool \mbox{\hyperlink{class_entity_a1a6d511b10e390497d5aa76e1cfca601}{Destroy\+On\+Reload}} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{_entity_8hpp_source_l00013}{13}} of file \mbox{\hyperlink{_entity_8hpp_source}{Entity.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_entity_a0cd2d2af8f570124a5333cb711f8c0bf}\label{class_entity_a0cd2d2af8f570124a5333cb711f8c0bf}} 
+\index{Entity@{Entity}!Entity@{Entity}}
+\index{Entity@{Entity}!Entity@{Entity}}
+\doxysubsubsection{\texorpdfstring{Entity()}{Entity()}}
+{\footnotesize\ttfamily Entity\+::\+Entity (\begin{DoxyParamCaption}\item[{unsigned long long}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Create a new object of type entity. 
+
+
+
+Definition at line \mbox{\hyperlink{_entity_8hpp_source_l00031}{31}} of file \mbox{\hyperlink{_entity_8hpp_source}{Entity.\+hpp}}.
+
+\mbox{\Hypertarget{class_entity_a588098978eea6a3486b7361605ff3f0f}\label{class_entity_a588098978eea6a3486b7361605ff3f0f}} 
+\index{Entity@{Entity}!````~Entity@{$\sim$Entity}}
+\index{````~Entity@{$\sim$Entity}!Entity@{Entity}}
+\doxysubsubsection{\texorpdfstring{$\sim$Entity()}{~Entity()}}
+{\footnotesize\ttfamily virtual Entity\+::$\sim$\+Entity (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Definition at line \mbox{\hyperlink{_entity_8hpp_source_l00032}{32}} of file \mbox{\hyperlink{_entity_8hpp_source}{Entity.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_entity_a533c904fd4e4f40d33ceb528304a241e}\label{class_entity_a533c904fd4e4f40d33ceb528304a241e}} 
+\index{Entity@{Entity}!AddComponent@{AddComponent}}
+\index{AddComponent@{AddComponent}!Entity@{Entity}}
+\doxysubsubsection{\texorpdfstring{AddComponent()}{AddComponent()}}
+{\footnotesize\ttfamily void Entity\+::\+Add\+Component (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ Component $>$}]{component }\end{DoxyParamCaption})}
+
+
+
+Bind the component parameter as a component of an entity. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em component} & Gets the component we want \\
+\hline
+\end{DoxyParams}
+Sets the component name and binds it to the entity in which it\textquotesingle{}s used, then adds it to the component pool
+
+Definition at line \mbox{\hyperlink{_entity_8cpp_source_l00059}{59}} of file \mbox{\hyperlink{_entity_8cpp_source}{Entity.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{class_entity_a533c904fd4e4f40d33ceb528304a241e_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_entity_a45d824cb7e107dce25d4bab190a1e169}\label{class_entity_a45d824cb7e107dce25d4bab190a1e169}} 
+\index{Entity@{Entity}!GetComponent@{GetComponent}}
+\index{GetComponent@{GetComponent}!Entity@{Entity}}
+\doxysubsubsection{\texorpdfstring{GetComponent()}{GetComponent()}}
+{\footnotesize\ttfamily std\+::shared\+\_\+ptr$<$ Component $>$ Entity\+::\+Get\+Component (\begin{DoxyParamCaption}\item[{std\+::string}]{component\+Name }\end{DoxyParamCaption})}
+
+
+
+Gets the wanted component. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em component\+Name} & Finds the wanted component by its name\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a weak\+\_\+ptr to the wanted component 
+\end{DoxyReturn}
+If the component is found in the pool, it returns it, else it returns empty
+
+Definition at line \mbox{\hyperlink{_entity_8cpp_source_l00075}{75}} of file \mbox{\hyperlink{_entity_8cpp_source}{Entity.\+cpp}}.
+
+\mbox{\Hypertarget{class_entity_a14717332a9b32aaadb5877e1cad3b78d}\label{class_entity_a14717332a9b32aaadb5877e1cad3b78d}} 
+\index{Entity@{Entity}!GetID@{GetID}}
+\index{GetID@{GetID}!Entity@{Entity}}
+\doxysubsubsection{\texorpdfstring{GetID()}{GetID()}}
+{\footnotesize\ttfamily unsigned long long Entity\+::\+Get\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{_entity_8hpp_source_l00076}{76}} of file \mbox{\hyperlink{_entity_8hpp_source}{Entity.\+hpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{class_entity_a14717332a9b32aaadb5877e1cad3b78d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_entity_ad2f398ea0331cea0f5ddfe0bfb903343}\label{class_entity_ad2f398ea0331cea0f5ddfe0bfb903343}} 
+\index{Entity@{Entity}!OnEntityCreate@{OnEntityCreate}}
+\index{OnEntityCreate@{OnEntityCreate}!Entity@{Entity}}
+\doxysubsubsection{\texorpdfstring{OnEntityCreate()}{OnEntityCreate()}}
+{\footnotesize\ttfamily void Entity\+::\+On\+Entity\+Create (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets called once whenever the program is initializing itself. 
+
+gets every component in the uncreated\+Components queue, creates it and puts it in the bound\+Components table
+
+Definition at line \mbox{\hyperlink{_entity_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{_entity_8cpp_source}{Entity.\+cpp}}.
+
+\mbox{\Hypertarget{class_entity_a80993c0bb7aec06729e607b895adfe17}\label{class_entity_a80993c0bb7aec06729e607b895adfe17}} 
+\index{Entity@{Entity}!OnEntityDestroy@{OnEntityDestroy}}
+\index{OnEntityDestroy@{OnEntityDestroy}!Entity@{Entity}}
+\doxysubsubsection{\texorpdfstring{OnEntityDestroy()}{OnEntityDestroy()}}
+{\footnotesize\ttfamily void Entity\+::\+On\+Entity\+Destroy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets called when an entity is destroyed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em check\+Destroy\+On\+Reload} & Whether to check the \mbox{\hyperlink{class_entity_a1a6d511b10e390497d5aa76e1cfca601}{Destroy\+On\+Reload()}} function \\
+\hline
+\end{DoxyParams}
+Gets every component in the component bool and calls the On\+Destroy() function if it\textquotesingle{}s destroyed
+
+Definition at line \mbox{\hyperlink{_entity_8cpp_source_l00048}{48}} of file \mbox{\hyperlink{_entity_8cpp_source}{Entity.\+cpp}}.
+
+\mbox{\Hypertarget{class_entity_aa748d2ae63aea78cf0f7cd5dfd648fb2}\label{class_entity_aa748d2ae63aea78cf0f7cd5dfd648fb2}} 
+\index{Entity@{Entity}!OnUpdateComponents@{OnUpdateComponents}}
+\index{OnUpdateComponents@{OnUpdateComponents}!Entity@{Entity}}
+\doxysubsubsection{\texorpdfstring{OnUpdateComponents()}{OnUpdateComponents()}}
+{\footnotesize\ttfamily void Entity\+::\+On\+Update\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Updates the components once per frame. 
+
+Gets every component in the component bool and calls the On\+Update() function if they\textquotesingle{}re active
+
+Definition at line \mbox{\hyperlink{_entity_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{_entity_8cpp_source}{Entity.\+cpp}}.
+
+\mbox{\Hypertarget{class_entity_aa6b853ded3f9a70889c1e66d0b7a82e2}\label{class_entity_aa6b853ded3f9a70889c1e66d0b7a82e2}} 
+\index{Entity@{Entity}!OnUpdateUIComponents@{OnUpdateUIComponents}}
+\index{OnUpdateUIComponents@{OnUpdateUIComponents}!Entity@{Entity}}
+\doxysubsubsection{\texorpdfstring{OnUpdateUIComponents()}{OnUpdateUIComponents()}}
+{\footnotesize\ttfamily void Entity\+::\+On\+Update\+UIComponents (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Updates the UI components once per frame. 
+
+Gets every component in the component bool and calls the On\+UI() function if they\textquotesingle{}re active
+
+Definition at line \mbox{\hyperlink{_entity_8cpp_source_l00036}{36}} of file \mbox{\hyperlink{_entity_8cpp_source}{Entity.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_entity_a1a6d511b10e390497d5aa76e1cfca601}\label{class_entity_a1a6d511b10e390497d5aa76e1cfca601}} 
+\index{Entity@{Entity}!DestroyOnReload@{DestroyOnReload}}
+\index{DestroyOnReload@{DestroyOnReload}!Entity@{Entity}}
+\doxysubsubsection{\texorpdfstring{DestroyOnReload}{DestroyOnReload}}
+{\footnotesize\ttfamily bool Entity\+::\+Destroy\+On\+Reload = true}
+
+
+
+Definition at line \mbox{\hyperlink{_entity_8hpp_source_l00078}{78}} of file \mbox{\hyperlink{_entity_8hpp_source}{Entity.\+hpp}}.
+
+\mbox{\Hypertarget{class_entity_ada7236e1f173a0d5cf99e443eeb616f3}\label{class_entity_ada7236e1f173a0d5cf99e443eeb616f3}} 
+\index{Entity@{Entity}!Tag@{Tag}}
+\index{Tag@{Tag}!Entity@{Entity}}
+\doxysubsubsection{\texorpdfstring{Tag}{Tag}}
+{\footnotesize\ttfamily std\+::string Entity\+::\+Tag \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{_entity_8hpp_source_l00074}{74}} of file \mbox{\hyperlink{_entity_8hpp_source}{Entity.\+hpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Engine/\+Source/\mbox{\hyperlink{_entity_8hpp}{Entity.\+hpp}}\item 
+Engine/\+Source/\mbox{\hyperlink{_entity_8cpp}{Entity.\+cpp}}\end{DoxyCompactItemize}
