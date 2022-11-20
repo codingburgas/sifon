@@ -32,7 +32,7 @@ private:
 
 	const std::vector<Button> m_Buttons{
 		Button {"PLAY", []() { AppManager::GetInstance()->ChangeScene("res/scenes/character_selection_scene.json"); }},
-		Button {"TUTORIAL", []() { OpenURL("https://sifon-docs.gitbook.io/untitled/fundamentals/getting-set-up"); }},
+		Button {"TUTORIAL", []() { OpenURL("https://sifon-docs.gitbook.io/main/fundamentals/getting-set-up"); }},
 		Button {"EXIT", []() { AppManager::GetInstance()->Quit(); }}
 	};
 };
