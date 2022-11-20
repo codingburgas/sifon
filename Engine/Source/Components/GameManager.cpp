@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <ctime>
 #include <cstdlib>
+#include <tuple>
 
 bool IsYearLeap(unsigned& year)
 {
@@ -42,6 +43,31 @@ void GameManager::OnUpdate()
 {
 	if (IsKeyPressed(KEY_ESCAPE))
 		SetPaused(!GetPaused());
+}
+
+GameManager::Status GameManager::GetGameStatus()
+{
+	auto currentDate = std::tie(m_State.m_Date.m_Year, m_State.m_Date.m_Month, m_State.m_Date.m_Day);
+	auto endingDate = std::tie(m_State.m_EndingDate.m_Year, m_State.m_EndingDate.m_Month, m_State.m_EndingDate.m_Day);
+	int wonRevolutions = GetWonRevolutions();
+	int lostRevolutions = GetLostRevolutions();
+
+	if (endingDate < currentDate)
+	{
+		return { "Ran out of time", WinningStatus::LOST };
+	}
+
+	if (lostRevolutions >= 3)
+	{
+		return { "Lost 3 or more revolutions", WinningStatus::LOST };
+	}
+
+	if (wonRevolutions >= 3)
+	{
+		return { "Won 3 revolutions", WinningStatus::WON };
+	}
+
+	return { "", WinningStatus::PLAYING };
 }
 
 

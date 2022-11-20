@@ -99,10 +99,25 @@ class GameManager : public Component
 	void AlterMoney(int by);
 
 public:
+	enum class WinningStatus
+	{
+		WON = 1,
+		PLAYING = 0,
+		LOST = -1
+	};
+
+	struct Status
+	{
+		std::string m_Reason;
+		WinningStatus m_Status;
+	};
+
 	DEFINE_COMPONENT(GameManager);
 
 	void OnCreate() override;
 	void OnUpdate() override;
+
+	Status GetGameStatus();
 
 	void SetCharacterName(std::string name);
 	void SetFactorScales(std::array<float, FACTORS_COUNT> factors);
@@ -140,6 +155,11 @@ public:
 
 	void SetPaused(bool isPaused);
 	bool GetPaused();
+
+	const GameState& GetState()
+	{
+		return m_State;
+	}
 
 	// NOT IMPLEMENTED
 	bool LoadSavefile();
