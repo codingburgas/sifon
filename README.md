@@ -59,7 +59,7 @@
   - [Team Documentation](https://github.com/codingburgas/2223-educational-traveling-sifon/raw/docs/Documentation/siPhone%20-%20Documentation.docx)
 
 ### Presenting
-  - [Presentation]()
+  - [Presentation](https://github.com/codingburgas/2223-educational-traveling-sifon/raw/docs/Documentation/siPhone_-_Presentation.pptx)
 
 <hr>
 
