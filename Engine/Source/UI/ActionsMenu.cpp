@@ -1,9 +1,9 @@
 #include "./ActionsMenu.hpp"
 
-float ActionsMenu::s_BottomPadding = 40.f;
-
-ActionsMenu::ActionsMenu(std::map<std::string, std::function<void()>> buttonMap)
+ActionsMenu::ActionsMenu(std::map<std::string, std::function<void()>>& buttonMap, float bottomPadding)
 {
+	m_BottomPadding = bottomPadding;
+
 	std::vector<std::string> buttons{};
 	for (auto& [name, callback] : buttonMap) { buttons.push_back(name); }
 
@@ -13,7 +13,7 @@ ActionsMenu::ActionsMenu(std::map<std::string, std::function<void()>> buttonMap)
 			std::make_unique<ActionButton>(buttons.front(), ActionButton::Position::MOST_LEFT),
 			buttonMap[buttons.front()]});
 		m_Buttons.back().m_Button->m_Position.x = 0.f;
-		m_Buttons.back().m_Button->m_Position.y = GetScreenHeight() - m_Buttons.back().m_Button->GetSize().y - s_BottomPadding;
+		m_Buttons.back().m_Button->m_Position.y = GetScreenHeight() - m_Buttons.back().m_Button->GetSize().y - m_BottomPadding;
 
 		for (auto it = buttons.begin() + 1; it < buttons.end() - 1; it++)
 		{
@@ -25,7 +25,7 @@ ActionsMenu::ActionsMenu(std::map<std::string, std::function<void()>> buttonMap)
 				std::move(newButton), buttonMap[*it] });
 
 			// adjust (now new) last button's y axis
-			m_Buttons.back().m_Button->m_Position.y = GetScreenHeight() - m_Buttons.back().m_Button->GetSize().y - s_BottomPadding;
+			m_Buttons.back().m_Button->m_Position.y = GetScreenHeight() - m_Buttons.back().m_Button->GetSize().y - m_BottomPadding;
 		}
 
 		auto newButton = std::make_unique<ActionButton>(buttons.back(), ActionButton::Position::MOST_RIGHT);
@@ -36,20 +36,20 @@ ActionsMenu::ActionsMenu(std::map<std::string, std::function<void()>> buttonMap)
 				std::move(newButton), buttonMap[buttons.back()]});
 
 		// adjust (now new) last button's y axis
-		m_Buttons.back().m_Button->m_Position.y = GetScreenHeight() - m_Buttons.back().m_Button->GetSize().y - s_BottomPadding;
+		m_Buttons.back().m_Button->m_Position.y = GetScreenHeight() - m_Buttons.back().m_Button->GetSize().y - m_BottomPadding;
 	}
 	else if (buttons.size() == 2)
 	{
 		m_Buttons.push_back({
 			std::make_unique<ActionButton>(buttons.front(), ActionButton::Position::MOST_LEFT), buttonMap[buttons.front()]});
 		m_Buttons.back().m_Button->m_Position.x = 0.f;
-		m_Buttons.back().m_Button->m_Position.y = GetScreenHeight() - m_Buttons.back().m_Button->GetSize().y - s_BottomPadding;
+		m_Buttons.back().m_Button->m_Position.y = GetScreenHeight() - m_Buttons.back().m_Button->GetSize().y - m_BottomPadding;
 
 
 		auto newButton = std::make_unique<ActionButton>(buttons.back(), ActionButton::Position::MOST_RIGHT);
 
 		// position new button
-		newButton->m_Position.y = GetScreenHeight() - m_Buttons.back().m_Button->GetSize().y - s_BottomPadding;
+		newButton->m_Position.y = GetScreenHeight() - m_Buttons.back().m_Button->GetSize().y - m_BottomPadding;
 		newButton->m_Position.x = m_Buttons.back().m_Button->m_Position.x + m_Buttons.back().m_Button->GetSize().x;
 		m_Buttons.push_back({
 			std::move(newButton), buttonMap[buttons.back()] });
@@ -74,7 +74,7 @@ void ActionsMenu::DrawButtons()
 	{
 		button.m_Button->Draw();
 		if (flag)
-			DrawLine(button.m_Button->m_Position.x, button.m_Button->m_Position.y, button.m_Button->m_Position.x, GetScreenHeight() - s_BottomPadding, WHITE);
+			DrawLine(button.m_Button->m_Position.x, button.m_Button->m_Position.y, button.m_Button->m_Position.x, GetScreenHeight() - m_BottomPadding, WHITE);
 		flag = true;
 	}
 }

@@ -70,7 +70,8 @@ private:
 
 class ActionsMenu : public UIElement
 {
-	static float s_BottomPadding;
+	float m_BottomPadding;
+	bool m_IsShown = true;
 
 	struct ButtonData
 	{
@@ -83,14 +84,29 @@ class ActionsMenu : public UIElement
 	void DrawButtons();
 	void HandleInput();
 
-public:
 
-	ActionsMenu(std::map<std::string, std::function<void()>> buttons);
+public:
+	ActionsMenu(std::map<std::string, std::function<void()>>& buttonMap, float bottomPadding);
+	
+	void ToggleShow()
+	{
+		m_IsShown = !m_IsShown;
+	}
+
+	void Show()
+	{
+		m_IsShown = true;
+	}
+
+	void Hide()
+	{
+		m_IsShown = false;
+	}
 
 	void Draw() override
 	{
 		auto gameManager = GET_COMPONENT_FROM(EntityManager::GetInstance()->GetEntityFromTagName("GameController"), GameManager);
-		if (gameManager->GetPaused()) return;
+		if (gameManager->GetPaused() || !m_IsShown) return;
 
 		DrawButtons();
 		HandleInput();
