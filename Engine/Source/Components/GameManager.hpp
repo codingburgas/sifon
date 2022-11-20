@@ -13,15 +13,16 @@
 
 struct GameState
 {
-	std::array<float, FACTORS_COUNT> m_FactorScales;
-	std::string m_CharacterName;
+	std::array<float, FACTORS_COUNT> m_FactorScales{};
+	std::string m_CharacterName{};
+	int m_CharacterMonthlyIncome = 0;
 
-	std::vector<std::string> m_RegionOrganisations;
+	std::vector<std::string> m_RegionOrganisations{};
 
 	enum class Resource
 	{
 		MANPOWER = 2,
-		MELEE = 3,
+		GUNS = 3,
 		FOOD_WATER = 6,
 		CLOTHES = 7
 	};
@@ -33,38 +34,43 @@ struct GameState
 		HOPE = 4,
 	};
 
-	struct {
-		std::string m_Region;
-		bool m_IsActive = false;
-	} m_CurrentRevolution;
-
 	const float m_PercentToWin = 70.f;
 
-	bool m_LastRevolutionWon;
+	bool m_LastRevolutionWon = false;
+	struct {
+		int m_GunAmount = 0;
+		int m_Manpower = 0;
+		int m_Money = 0;
+		int m_Food = 0;
+		int m_Clothes = 0;
+		float m_LoyaltyPercent = 0.f;
+		float m_MoralPercent = 0.f;
+		float m_HopePercent = 0.f;
+	} m_LastRevolutionAlters;
 
 	int m_WonRevolutionsCount = 0;
 	int m_LostRevolutionsCount = 0;
 
 	struct {
-		int m_MeleeAmount = 0;
-		int m_Manpower = 0;
-		int m_Money = 0;
-		int m_Food = 0;
-		int m_Clothes = 0;
+		int m_GunAmount = 1;
+		int m_Manpower = 1;
+		int m_Money = 1;
+		int m_Food = 1;
+		int m_Clothes = 1;
 	} m_Resources;
 
 	struct {
-		float m_LoyaltyPercent = 0.f;
-		float m_MoralPercent = 0.f;
-		float m_HopePercent = 0.f;
+		float m_LoyaltyPercent = 0.01f;
+		float m_MoralPercent = 0.01f;
+		float m_HopePercent = 0.01f;
 	} m_Community;
 
 	struct Date {
-	private:
+	public:
 		unsigned m_Year;
 		unsigned m_Month;
 		unsigned m_Day;
-	public:
+
 		Date(unsigned day, unsigned month, unsigned year)
 		{
 			SetDay(day);
@@ -75,10 +81,6 @@ struct GameState
 		void SetDay(unsigned day);
 		void SetYear(unsigned year);
 		void SetMonth(unsigned month);
-
-		void AdvanceMonths(unsigned count);
-		void AdvanceDays(unsigned count);
-		void AdvanceYears(unsigned count);
 
 		unsigned GetMonth();
 		unsigned GetYear();
@@ -105,21 +107,36 @@ public:
 	void SetCharacterName(std::string name);
 	void SetFactorScales(std::array<float, FACTORS_COUNT> factors);
 	void LoadCharacterFromMetadataIndex(size_t index);
-
+	void LoadStartEndTimeFromMetadata();
 	
 	float GetTodayWeather(); /* in celsius degrees */
+	
+	void AdvanceMonths(unsigned count);
+	void AdvanceDays(unsigned count);
+	void AdvanceYears(unsigned count);
+
+	void AdvanceDay();
+	void AdvanceMonth();
+
+	unsigned GetDay();
+	unsigned GetMonth();
+	unsigned GetYear();
 
 	// Resources
 	int GetMoneyAmount(); /* in currency units */
 	int GetResourceAmount(GameState::Resource resourceType); /* in units */
 	float GetCommunityPercent(GameState::CommunityResource resourceType); /* in percent */
 
-	float GetWinProbability(); /* in percent */
+	int GetWonRevolutions();
+	int GetLostRevolutions();
+	float GetWinProbability(bool withRandomChance = true); /* in percent */
 
 	// Actions
 	void MakeOrganisationInRegion(std::string region);
 	void MakeRevolution();
 	void BuyResources(GameState::Resource resourceType, int amount);
+
+	const std::vector<std::string>& GetOrganisations();
 
 	void SetPaused(bool isPaused);
 	bool GetPaused();

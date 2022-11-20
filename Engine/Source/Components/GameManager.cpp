@@ -65,8 +65,11 @@ void GameState::Date::SetYear(unsigned year)
 	m_Year = std::clamp(year, 0u, UINT_MAX);
 }
 
-void GameState::Date::AdvanceDays(unsigned days)
+void GameManager::AdvanceDays(unsigned days)
 {
+	auto& m_Day = m_State.m_Date.m_Day;
+	auto& m_Month = m_State.m_Date.m_Month;
+	auto& m_Year = m_State.m_Date.m_Year;
 	m_Day += days;
 	while (m_Day > GetMaxDayOfMonth(m_Month, m_Year))
 	{
@@ -75,18 +78,22 @@ void GameState::Date::AdvanceDays(unsigned days)
 	}
 }
 
-void GameState::Date::AdvanceMonths(unsigned months)
+void GameManager::AdvanceMonths(unsigned months)
 {
+	auto& m_Month = m_State.m_Date.m_Month;
+	AlterMoney(m_State.m_CharacterMonthlyIncome * months);
 	m_Month += months;
 	while (m_Month > 12)
 	{
 		m_Month -= 12;
 		AdvanceYears(1);
 	}
+	AdvanceDays(0);
 }
 
-void GameState::Date::AdvanceYears(unsigned years)
+void GameManager::AdvanceYears(unsigned years)
 {
+	auto& m_Year = m_State.m_Date.m_Year;
 	m_Year += years;
 }
 
@@ -115,8 +122,26 @@ float GameManager::GetTodayWeather()
 	return abs(sin((monthAndDays / 12) * PI) * 25);
 }
 
+void ResetState(GameState& m_State)
+{
+	m_State.m_FactorScales = {};
+	m_State.m_CharacterName = {};
+	m_State.m_CharacterMonthlyIncome = {};
+	m_State.m_RegionOrganisations = {};
+	m_State.m_LastRevolutionWon = false;
+	m_State.m_WonRevolutionsCount = {};
+	m_State.m_LostRevolutionsCount = {};
+	m_State.m_Resources = {};
+	m_State.m_Community = {};
+	m_State.m_Date = { 1u, 1u, 1u };
+	m_State.m_EndingDate = { 1u, 1u, 1u };
+	m_State.m_IsPaused = false;
+}
+
 void GameManager::LoadCharacterFromMetadataIndex(size_t index)
 {
+	ResetState(m_State);
+
 	// get metadata
 	auto& metadata = GET_COMPONENT_FROM(
 		EntityManager::GetInstance()->GetEntityFromTagName("MappackMetadata"),
@@ -125,10 +150,58 @@ void GameManager::LoadCharacterFromMetadataIndex(size_t index)
 	if (!(metadata.m_Characters.size() > index))
 		throw std::runtime_error("Index is out of bounds of the metadata character array");
 
-	auto character = metadata.m_Characters.at(index);
+	auto& character = metadata.m_Characters.at(index);
 	m_State.m_CharacterName = character.m_Name;
-	for (auto& [type, amount] : character.m_Boosts)
+	m_State.m_CharacterMonthlyIncome = character.m_MonthlyIncome;
+	for (auto& [type, amount] : character.m_BoostPercents)
 		m_State.m_FactorScales[type] = amount;
+
+	m_State.m_Community.m_HopePercent = static_cast<float>(10 + rand() % 20) / 100.f;
+	m_State.m_Community.m_LoyaltyPercent = static_cast<float>(20 + rand() % 40) / 100.f;
+	m_State.m_Community.m_MoralPercent = static_cast<float>(20 + rand() % 40) / 100.f;
+	AlterMoney(500 + rand() % 1000);
+}
+
+void GameManager::LoadStartEndTimeFromMetadata()
+{
+	auto& metadata = GET_COMPONENT_FROM(
+		EntityManager::GetInstance()->GetEntityFromTagName("MappackMetadata"),
+		MappackMetadataStore)->GetMetadata();
+
+	{
+		auto& [day, month, year] = metadata.m_StartDate;
+		m_State.m_Date = GameState::Date(day, month, year);
+	}
+
+	{
+		auto& [day, month, year] = metadata.m_EndDate;
+		m_State.m_EndingDate = GameState::Date(day, month, year);
+	}
+}
+
+void GameManager::AdvanceDay()
+{
+	AdvanceDays(1);
+}
+
+void GameManager::AdvanceMonth()
+{
+	AdvanceMonths(1);
+}
+
+unsigned GameManager::GetDay()
+{
+	return m_State.m_Date.GetDay();
+}
+
+unsigned GameManager::GetMonth()
+{
+	return m_State.m_Date.GetMonth();
+}
+
+unsigned GameManager::GetYear()
+{
+	return m_State.m_Date.GetYear();
 }
 
 bool GameManager::LoadSavefile()
@@ -162,7 +235,7 @@ bool GameManager::LoadSavefile()
 	json["factorsAmount"][Metadata::Factor::HOPE].get_to(m_State.m_Community.m_HopePercent);
 	json["factorsAmount"][Metadata::Factor::LOYALTY].get_to(m_State.m_Community.m_LoyaltyPercent);
 	json["factorsAmount"][Metadata::Factor::MANPOWER].get_to(m_State.m_Resources.m_Manpower);
-	json["factorsAmount"][Metadata::Factor::MELEE].get_to(m_State.m_Resources.m_MeleeAmount);
+	json["factorsAmount"][Metadata::Factor::GUNS].get_to(m_State.m_Resources.m_GunAmount);
 	json["factorsAmount"][Metadata::Factor::MONEY].get_to(m_State.m_Resources.m_Money);
 	json["factorsAmount"][Metadata::Factor::MORAL].get_to(m_State.m_Community.m_MoralPercent);
 
@@ -186,7 +259,7 @@ bool GameManager::GetPaused()
 
 void GameManager::SetCharacterName(std::string name)
 {
-	m_State.m_CharacterName = name;// TODO: implement
+	m_State.m_CharacterName = name;
 }
 
 void GameManager::SetFactorScales(std::array<float, FACTORS_COUNT> factors)
@@ -196,12 +269,19 @@ void GameManager::SetFactorScales(std::array<float, FACTORS_COUNT> factors)
 
 void GameManager::MakeOrganisationInRegion(std::string region)
 {
-	m_State.m_Date.AdvanceMonths(2);
 	auto& regions = m_State.m_RegionOrganisations;
-	if (std::find(regions.begin(), regions.begin(), region) != regions.end())
+	if (std::find(regions.begin(), regions.end(), region) == regions.end())
 	{
+		AdvanceMonths(2);
+		m_State.m_Community.m_HopePercent += static_cast<float>(5 + rand() % 5) / 100.f;
+		m_State.m_Resources.m_Manpower += 1000;
 		regions.push_back(region);
 	}
+}
+
+const std::vector<std::string>& GameManager::GetOrganisations()
+{
+	return m_State.m_RegionOrganisations;
 }
 
 int GameManager::GetMoneyAmount()
@@ -219,8 +299,8 @@ int GameManager::GetResourceAmount(GameState::Resource resourceType)
 		return m_State.m_Resources.m_Food;
 	case GameState::Resource::MANPOWER:
 		return m_State.m_Resources.m_Manpower;
-	case GameState::Resource::MELEE:
-		return m_State.m_Resources.m_MeleeAmount;
+	case GameState::Resource::GUNS:
+		return m_State.m_Resources.m_GunAmount;
 	}
 
 	return -1;
@@ -241,14 +321,14 @@ float GameManager::GetCommunityPercent(GameState::CommunityResource resourceType
 	return -1;
 }
 
-float GameManager::GetWinProbability()
+float GameManager::GetWinProbability(bool withRandomChance)
 {
-	auto factors = m_State.m_FactorScales;
+	const auto& factors = m_State.m_FactorScales;
 
 	float weather = GetTodayWeather();
 
 	float manpower = GetResourceAmount(GameState::Resource::MANPOWER) * factors[2];
-	float melee = GetResourceAmount(GameState::Resource::MELEE) * factors[3];
+	float guns = GetResourceAmount(GameState::Resource::GUNS) * factors[3];
 	float food = GetResourceAmount(GameState::Resource::FOOD_WATER) * factors[6];
 	float clothes = GetResourceAmount(GameState::Resource::CLOTHES) * factors[7];
 
@@ -256,75 +336,98 @@ float GameManager::GetWinProbability()
 	float loyalty = GetCommunityPercent(GameState::CommunityResource::LOYALTY) * factors[1];
 	float moral = GetCommunityPercent(GameState::CommunityResource::MORAL) * factors[0];
 
-	float weatherPercent = - (12.5f - weather) / 2;
-	float manpowerPercent = manpower / 120 + melee / manpower * 100 / 4;
-	float necessitiesPercent = ((food + clothes) / (manpower * 2) - 1) * 100;
-	float communityPercent = - (0.5f - hope) / 2 - (0.5f - loyalty) / 2 - (0.5f - moral) / 2;
-	float randomPercent = rand() % 18 - 9.f;
+	float weatherPercent = -(12.5f - weather) / 2;
+	float manpowerPercent = manpower / 125 + guns / manpower * 100 / 5;
+	float necessitiesPercent = std::clamp(food + clothes, 0.f, manpower * 2 + 5000) / (manpower * 2) * 12 - 10;
+	float communityPercent = -(1.5f - hope - loyalty - moral) * 10;
+	float randomPercent;
+
+	if (withRandomChance)
+		randomPercent = rand() % 18 - 9.f;
+	else randomPercent = 0.f;
 
 	float totalPercent = weatherPercent + randomPercent + manpowerPercent + necessitiesPercent;
 	
 	return totalPercent;
 }
 
+int GameManager::GetWonRevolutions()
+{
+	return m_State.m_WonRevolutionsCount;
+}
+int GameManager::GetLostRevolutions()
+{
+	return m_State.m_LostRevolutionsCount;
+}
+
 void GameManager::MakeRevolution()
 {
-	m_State.m_Date.AdvanceMonths(1);
+	AdvanceMonths(1);
 
 	int money = GetMoneyAmount();
 	int manpower = GetResourceAmount(GameState::Resource::MANPOWER);
-	int melee = GetResourceAmount(GameState::Resource::MELEE);
+	int guns = GetResourceAmount(GameState::Resource::GUNS);
 	int food = GetResourceAmount(GameState::Resource::FOOD_WATER);
 	int clothes = GetResourceAmount(GameState::Resource::CLOTHES);
 	float hope = GetCommunityPercent(GameState::CommunityResource::HOPE);
 	float loyalty = GetCommunityPercent(GameState::CommunityResource::LOYALTY);
 	float moral = GetCommunityPercent(GameState::CommunityResource::MORAL);
 
+	int newMoney = rand() % 20000;
+	float newHope, newLoyalty, newMoral;
+
 	if (GetWinProbability() >= m_State.m_PercentToWin)
 	{
 		m_State.m_WonRevolutionsCount++;
 		m_State.m_LastRevolutionWon = true;
 
-		int newMoney = rand() % 20000;
-		float newHope = hope + rand() % 40 / 100.f;
-		float newLoyalty = loyalty + rand() % 40 / 100.f;
-		float newMoral = moral + rand() % 40 / 100.f;
+		newHope = hope + rand() % 40 / 100.f;
+		newLoyalty = loyalty + rand() % 40 / 100.f;
+		newMoral = moral + rand() % 40 / 100.f;
 
 		AlterMoney(newMoney);
-		m_State.m_Community.m_HopePercent = std::clamp(newHope, 0.f, 1.f);
-		m_State.m_Community.m_LoyaltyPercent = std::clamp(newLoyalty, 0.f, 1.f);
-		m_State.m_Community.m_MoralPercent = std::clamp(newMoral, 0.f, 1.f);
+		m_State.m_Community.m_HopePercent = std::clamp(newHope, 0.01f, 1.f);
+		m_State.m_Community.m_LoyaltyPercent = std::clamp(newLoyalty, 0.01f, 1.f);
+		m_State.m_Community.m_MoralPercent = std::clamp(newMoral, 0.01f, 1.f);
 	}
 	else
 	{
 		m_State.m_LostRevolutionsCount++;
 		m_State.m_LastRevolutionWon = false;
 
-		int newMoney = rand() % 20000;
-		float newHope = hope - rand() % 40 / 100.f;
-		float newLoyalty = loyalty - rand() % 40 / 100.f;
-		float newMoral = moral - rand() % 40 / 100.f;
+		newHope = hope - rand() % 40 / 100.f;
+		newLoyalty = loyalty - rand() % 40 / 100.f;
+		newMoral = moral - rand() % 40 / 100.f;
 
 		AlterMoney(-newMoney);
-		m_State.m_Community.m_HopePercent = std::clamp(newHope, 0.f, 1.f);
-		m_State.m_Community.m_LoyaltyPercent = std::clamp(newLoyalty, 0.f, 1.f);
-		m_State.m_Community.m_MoralPercent = std::clamp(newMoral, 0.f, 1.f);
+		m_State.m_Community.m_HopePercent = std::clamp(newHope, 0.01f, 1.f);
+		m_State.m_Community.m_LoyaltyPercent = std::clamp(newLoyalty, 0.01f, 1.f);
+		m_State.m_Community.m_MoralPercent = std::clamp(newMoral, 0.01f, 1.f);
 	}
 
 	int newManpower = manpower - rand() % 2000;
-	int newMelee = melee - rand() % 2000;
+	int newGuns = guns - rand() % 2000;
 	int newFood = food - rand() % 2000;
 	int newClothes = clothes - rand() % 2000;
 
-	m_State.m_Resources.m_Manpower = std::clamp(newManpower, 0, newManpower);
-	m_State.m_Resources.m_MeleeAmount = std::clamp(newMelee, 0, newMelee);
-	m_State.m_Resources.m_Food = std::clamp(newFood, 0, newFood);
-	m_State.m_Resources.m_Clothes = std::clamp(newClothes, 0, newClothes);
+	m_State.m_Resources.m_Manpower = std::clamp(newManpower, 1, INT_MAX);
+	m_State.m_Resources.m_GunAmount = std::clamp(newGuns, 1, INT_MAX);
+	m_State.m_Resources.m_Food = std::clamp(newFood, 1, INT_MAX);
+	m_State.m_Resources.m_Clothes = std::clamp(newClothes, 1, INT_MAX);
+
+	m_State.m_LastRevolutionAlters.m_LoyaltyPercent = newLoyalty - loyalty;
+	m_State.m_LastRevolutionAlters.m_HopePercent = newHope - hope;
+	m_State.m_LastRevolutionAlters.m_MoralPercent = newMoral - moral;
+
+	m_State.m_LastRevolutionAlters.m_GunAmount = newGuns - guns;
+	m_State.m_LastRevolutionAlters.m_Food = newFood - food;
+	m_State.m_LastRevolutionAlters.m_Manpower = newManpower - manpower;
+	m_State.m_LastRevolutionAlters.m_Clothes = newClothes - clothes;
 }
 
 void GameManager::BuyResources(GameState::Resource resourceType, int amount)
 {
-	const int meleeCost = 10;
+	const int gunCost = 10;
 	const int foodCost = 3;
 	const int clothesCost = 4;
 
@@ -332,12 +435,12 @@ void GameManager::BuyResources(GameState::Resource resourceType, int amount)
 
 	switch (resourceType)
 	{
-	case GameState::Resource::MELEE:
-		resourceCost *= meleeCost;
+	case GameState::Resource::GUNS:
+		resourceCost *= gunCost;
 
 		if (GetMoneyAmount() - resourceCost < 0) return;
 
-		m_State.m_Resources.m_MeleeAmount += amount;
+		m_State.m_Resources.m_GunAmount += amount;
 		break;
 	case GameState::Resource::FOOD_WATER:
 		resourceCost *= foodCost;
@@ -354,4 +457,6 @@ void GameManager::BuyResources(GameState::Resource resourceType, int amount)
 		m_State.m_Resources.m_Clothes += amount;
 		break;
 	}
+
+	AlterMoney(-resourceCost);
 }
