@@ -17,7 +17,7 @@ struct Metadata
 		MORAL = 0,
 		LOYALTY = 1,
 		MANPOWER = 2,
-		MELEE = 3,
+		GUNS = 3,
 		HOPE = 4,
 		MONEY = 5,
 		FOOD_WATER = 6,
@@ -26,11 +26,14 @@ struct Metadata
 
 	struct Character
 	{
-		std::string m_Name;
-		std::string m_Description;
-		std::string m_ImagePath;
-		std::map<Factor, float> m_Boosts;
+		std::string m_Name, m_Description, m_ImagePath;
+		std::map<Factor, float> m_BoostPercents;
+		int m_MonthlyIncome;
 	};
+
+	struct {
+		unsigned day, month, year;
+	} m_StartDate, m_EndDate;
 
 	std::string m_GeoJsonNameKey;
 
@@ -59,6 +62,16 @@ public:
 		jsonMeta["name"].get_to<std::string>(m_Metadata.m_Name);
 		jsonMeta["geoJsonNameKey"].get_to<std::string>(m_Metadata.m_GeoJsonNameKey);
 
+		json startDate = jsonMeta["startDate"];
+		startDate["day"].get_to(m_Metadata.m_StartDate.day);
+		startDate["month"].get_to(m_Metadata.m_StartDate.month);
+		startDate["year"].get_to(m_Metadata.m_StartDate.year);
+
+		json endDate = jsonMeta["endDate"];
+		endDate["day"].get_to(m_Metadata.m_EndDate.day);
+		endDate["month"].get_to(m_Metadata.m_EndDate.month);
+		endDate["year"].get_to(m_Metadata.m_EndDate.year);
+
 		assert(jsonMeta["characters"].is_array() && "Invalid Mappack Metadata JSON File!");
 		for (auto& character : jsonMeta["characters"])
 		{
@@ -66,11 +79,12 @@ public:
 			character["name"].get_to(sCharacter.m_Name);
 			character["description"].get_to(sCharacter.m_Description);
 			character["imagePath"].get_to(sCharacter.m_ImagePath);
+			character["monthlyIncome"].get_to(sCharacter.m_MonthlyIncome);
 
 			int i = 0;
 			for (auto& boost : character["boosts"])
 			{
-				boost.get_to(sCharacter.m_Boosts[(Metadata::Factor)i]);
+				boost.get_to(sCharacter.m_BoostPercents[(Metadata::Factor)i]);
 				i++;
 				if (i > FACTORS_COUNT - 1)
 					break;

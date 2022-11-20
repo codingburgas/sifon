@@ -32,7 +32,6 @@ private:
 
 	const std::vector<Button> m_Buttons{
 		Button {"PLAY", []() { AppManager::GetInstance()->ChangeScene("res/scenes/character_selection_scene.json"); }},
-		Button {"SETTINGS", []() { AppManager::GetInstance()->ChangeScene("settings_menu_scene.json"); }},
 		Button {"TUTORIAL", []() { AppManager::GetInstance()->ChangeScene("tutorial_scene.json"); }},
 		Button {"EXIT", []() { AppManager::GetInstance()->Quit(); }}
 	};

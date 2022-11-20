@@ -35,6 +35,7 @@
     <ClCompile Include="Source\UI\Carousel.cpp" />
     <ClCompile Include="Source\UI\CarouselElement.cpp" />
     <ClCompile Include="Source\UI\MainMenuButton.cpp" />
+    <ClCompile Include="Source\UI\TimeMenu.cpp" />
     <ClCompile Include="Source\Util\file_reader.cpp" />
     <ClCompile Include="Source\Util\graphics.cpp" />
     <ClCompile Include="Source\Util\la.cpp" />
@@ -63,7 +64,11 @@
     <ClInclude Include="Source\UI\Button.hpp" />
     <ClInclude Include="Source\UI\Carousel.hpp" />
     <ClInclude Include="Source\UI\CarouselElement.hpp" />
+    <ClInclude Include="Source\UI\EventSummary.hpp" />
+    <ClInclude Include="Source\UI\LostWonView.hpp" />
     <ClInclude Include="Source\UI\PauseMenu.hpp" />
+    <ClInclude Include="Source\UI\ResourceStatus.hpp" />
+    <ClInclude Include="Source\UI\TimeMenu.hpp" />
     <ClInclude Include="Source\UI\UIElement.hpp" />
     <ClInclude Include="Source\UI\MainMenuButton.hpp" />
     <ClInclude Include="Source\Util\file_reader.hpp" />
