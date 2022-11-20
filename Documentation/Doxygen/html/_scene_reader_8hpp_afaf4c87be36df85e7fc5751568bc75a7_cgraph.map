@@ -1,0 +1,4 @@
+<map id="InitSceneFromFile" name="InitSceneFromFile">
+<area shape="rect" id="node1" title="Initializes a string from a .json file in the param." alt="" coords="5,5,132,32"/>
+<area shape="rect" id="node2" href="$_scene_reader_8cpp.html#a1bbf56cabea908804a56b6db0be42e2d" title="Gets the contents of the .json file." alt="" coords="180,5,296,32"/>
+</map>

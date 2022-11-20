@@ -1,0 +1,59 @@
+\hypertarget{_scene_reader_8hpp}{}\doxysection{Engine/\+Source/\+Scene\+Reader.hpp File Reference}
+\label{_scene_reader_8hpp}\index{Engine/Source/SceneReader.hpp@{Engine/Source/SceneReader.hpp}}
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+Include dependency graph for Scene\+Reader.\+hpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{_scene_reader_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=241pt]{_scene_reader_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{_scene_reader_8hpp_afaf4c87be36df85e7fc5751568bc75a7}{Init\+Scene\+From\+File}} (const std\+::string)
+\begin{DoxyCompactList}\small\item\em Initializes a string from a .json file in the param. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_scene_reader_8hpp_afaf4c87be36df85e7fc5751568bc75a7}\label{_scene_reader_8hpp_afaf4c87be36df85e7fc5751568bc75a7}} 
+\index{SceneReader.hpp@{SceneReader.hpp}!InitSceneFromFile@{InitSceneFromFile}}
+\index{InitSceneFromFile@{InitSceneFromFile}!SceneReader.hpp@{SceneReader.hpp}}
+\doxysubsubsection{\texorpdfstring{InitSceneFromFile()}{InitSceneFromFile()}}
+{\footnotesize\ttfamily void Init\+Scene\+From\+File (\begin{DoxyParamCaption}\item[{const std\+::string}]{f\+Path }\end{DoxyParamCaption})}
+
+
+
+Initializes a string from a .json file in the param. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em f\+Path} & The path to the .json file \\
+\hline
+\end{DoxyParams}
+Gets the contents of the file in the f\+Path param with the \mbox{\hyperlink{_scene_reader_8cpp_a1bbf56cabea908804a56b6db0be42e2d}{Get\+File\+Contents()}} function
+
+Create an entity for every entity in the .json file, and give it its tag name if it doesn\textquotesingle{}t already exist
+
+For every component in the just created entity, create it and bind it to it
+
+Definition at line \mbox{\hyperlink{_scene_reader_8cpp_source_l00049}{49}} of file \mbox{\hyperlink{_scene_reader_8cpp_source}{Scene\+Reader.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=298pt]{_scene_reader_8hpp_afaf4c87be36df85e7fc5751568bc75a7_cgraph}
+\end{center}
+\end{figure}
