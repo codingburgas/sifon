@@ -336,19 +336,18 @@ float GameManager::GetWinProbability(bool withRandomChance)
 	float loyalty = GetCommunityPercent(GameState::CommunityResource::LOYALTY) * factors[1];
 	float moral = GetCommunityPercent(GameState::CommunityResource::MORAL) * factors[0];
 
-	float weatherPercent = -(12.5f - weather) / 2;
+	float weatherPercent = (weather - 12.5f) / 2;
 	float manpowerPercent = manpower / 125 + guns / manpower * 100 / 5;
-	float necessitiesPercent = std::clamp(food + clothes, 0.f, manpower * 2 + 5000) / (manpower * 2) * 12 - 10;
-	float communityPercent = -(1.5f - hope - loyalty - moral) * 10;
-	float randomPercent;
+	float necessitiesPercent = std::clamp(food + clothes, 0.f, manpower * 2 + 3000) / (manpower * 2) * 12 - 10;
+	float communityPercent = (hope + loyalty + moral - 1.5f) * 10;
+	float randomPercent = 0.f;
 
 	if (withRandomChance)
-		randomPercent = rand() % 18 - 9.f;
-	else randomPercent = 0.f;
+		randomPercent = rand() % 13 - 6;
 
-	float totalPercent = weatherPercent + randomPercent + manpowerPercent + necessitiesPercent;
+	float totalPercent = weatherPercent + manpowerPercent + necessitiesPercent + communityPercent + randomPercent;
 	
-	return totalPercent;
+	return std::clamp(totalPercent, 0.f, 100.f);
 }
 
 int GameManager::GetWonRevolutions()
@@ -381,9 +380,9 @@ void GameManager::MakeRevolution()
 		m_State.m_WonRevolutionsCount++;
 		m_State.m_LastRevolutionWon = true;
 
-		newHope = hope + rand() % 40 / 100.f;
-		newLoyalty = loyalty + rand() % 40 / 100.f;
-		newMoral = moral + rand() % 40 / 100.f;
+		newHope = hope + rand() % 20 / 100.f;
+		newLoyalty = loyalty + rand() % 20 / 100.f;
+		newMoral = moral + rand() % 20 / 100.f;
 
 		AlterMoney(newMoney);
 		m_State.m_Community.m_HopePercent = std::clamp(newHope, 0.01f, 1.f);
@@ -395,9 +394,9 @@ void GameManager::MakeRevolution()
 		m_State.m_LostRevolutionsCount++;
 		m_State.m_LastRevolutionWon = false;
 
-		newHope = hope - rand() % 40 / 100.f;
-		newLoyalty = loyalty - rand() % 40 / 100.f;
-		newMoral = moral - rand() % 40 / 100.f;
+		newHope = hope - rand() % 20 / 100.f;
+		newLoyalty = loyalty - rand() % 20 / 100.f;
+		newMoral = moral - rand() % 20 / 100.f;
 
 		AlterMoney(-newMoney);
 		m_State.m_Community.m_HopePercent = std::clamp(newHope, 0.01f, 1.f);
