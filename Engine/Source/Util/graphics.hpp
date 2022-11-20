@@ -2,11 +2,16 @@
 #include <cstdio>
 #include <cassert>
 #include <memory>
+#include <any>
 #include <unordered_map>
+#include <string>
 #include "../Managers/AppManager.hpp"
 #include "la.hpp"
 #include "raylib.h"
 
+// The class Texture's purpose is to encapsulate raylib's
+// primitive struct type and to simplify its usage in an
+// object oriented manner
 class CTexture
 {
 public:
@@ -34,12 +39,38 @@ private:
     RenderTexture verticallyMirroredTexture {};
 };
 
+// The class shader's purpose is to encapsulate
+// raylib's primitive Shader struct type and to
+// simplify raylib's SetShaderValue and GetShaderLocation
+// functions to a single SetShaderValue method
+class CShader
+{
+public:
+    CShader() = default;
+    virtual ~CShader()
+    {
+        Unload();
+    };
+
+    void Load(std::string vertexShader, std::string fragmentShader);
+    void Unload();
+
+    void SetShaderValue(std::string uniformName, std::any value, int type);
+
+    Shader& GetShader();
+
+private:
+    std::unordered_map<std::string, int> m_ShaderLocs;
+    Shader m_Shader{};
+};
+
+// The namespace Graphics contains all of the
 namespace Graphics
 {
-    // Used to initialize an SDL window
+    // Used to initialize a Raylib window
     bool InitWindow(Vec2f winDimensions, const char* title);
 
-    // Used to close the SDL window initialized by InitWindow
+    // Used to close the Raylib window initialized by InitWindow
     bool CloseWindow();
 
     // Returns the width and height of the window in the form of a vector

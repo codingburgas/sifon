@@ -1,50 +1,18 @@
 #include "SceneReader.hpp"
 #include "Managers/ECSManager.hpp"
 
-#include <fstream>
-#include <cassert>
-#include <sstream>
-
 #include "Components/TransformComponent2D.hpp"
 #include "Components/SpriteComponent.hpp"
+#include "Components/MapStore.hpp"
+#include "Components/MapRenderer.hpp"
+#include "Components/MainMenu.hpp"
+#include "Components/MappackMetadataStore.hpp"
+#include "Components/CharacterSelectMenu.hpp"
+#include "Components/GameUI.hpp"
+#include "Components/GameManager.hpp"
 
+#include "Util/file_reader.hpp"
 #include "Util/json.hpp"
-
-/**
- * @brief Gets the contents of the .json file
- * 
- * @param path The path to the .json file
- * 
- * @return Returns a string with all the components on an entity
- */
-std::string GetFileContents(const std::string path)
-{
-    std::stringstream jsonStream;
-
-    std::ifstream fJson;
-
-    /**
-     * @brief Open the file specified in the path param
-     */
-    fJson.open(path, std::ios::in);
-
-    if (!fJson.is_open())
-        throw std::runtime_error("File \"" + path + "\" could not be opened");
-    
-    /**
-     * @brief While there is still information on the file, extract it. When there is no more information, close the file
-     */
-    std::string jsonLine;
-    while (std::getline(fJson, jsonLine))
-        jsonStream << jsonLine << '\n';
-    
-    fJson.close();
-
-    /**
-     * @brief Return the stringstream with the information on the file
-     */
-    return jsonStream.str();
-}
 
 void InitSceneFromFile(const std::string fPath)
 {
@@ -118,6 +86,46 @@ void InitSceneFromFile(const std::string fPath)
                 component["ImagePath"].get_to(cmp->ImagePath);
 
                 entity->AddComponent(cmp);
+            }
+            else if (name == "MapStore")
+            {
+                auto cmp = ECS::CreateComponent<MapStore>();
+
+                entity->AddComponent(cmp);
+            }
+            else if (name == "MainMenu")
+            {
+                entity->AddComponent(ECS::CreateComponent<MainMenu>());
+            }
+            else if (name == "MapRenderer")
+            {
+                auto cmp = ECS::CreateComponent<MapRenderer>();
+
+                component["MapStoreEntityTag"].get_to(cmp->m_MapStoreEntityTag);
+
+                entity->AddComponent(cmp);
+            }
+            else if (name == "CharacterSelectMenu")
+            {
+                entity->AddComponent(ECS::CreateComponent<CharacterSelectMenu>());
+            }
+            else if (name == "MappackMetadataStore")
+            {
+                auto cmp = ECS::CreateComponent<MappackMetadataStore>();
+
+                component["MetadataPath"].get_to(cmp->m_MetadataPath);
+
+                entity->AddComponent(cmp);
+            }
+            else if (name == "GameUI")
+            {
+                auto cmp = ECS::CreateComponent<GameUI>();
+                
+                entity->AddComponent(cmp);
+            }
+            else if (name == "GameManager")
+            {
+                entity->AddComponent(ECS::CreateComponent<GameManager>());
             }
             else continue;
 

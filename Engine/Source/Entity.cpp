@@ -12,8 +12,8 @@ void Entity::OnEntityCreate()
         assert(boundComponents.find(component->ComponentName()) == boundComponents.end() && "An attempt was made to bind an already existing component type");
         
         uncreatedComponents.pop();
-        component->OnCreate();
         boundComponents[component->ComponentName()] = component;
+        component->OnCreate();
     }
     /*for (auto& [key, component] : boundComponents)
     {
@@ -70,6 +70,14 @@ void Entity::AddComponent(std::shared_ptr<Component> component)
     component->BindToEntity(this->GetID());
     uncreatedComponents.push(component);
     //boundComponents[componentName] = component;
+}
+
+void Entity::RemoveComponent(std::string componentName)
+{
+    if (boundComponents.find(componentName) == boundComponents.end()) return;
+
+    boundComponents.at(componentName)->OnDestroy();
+    boundComponents.erase(componentName);
 }
 
 std::shared_ptr<Component> Entity::GetComponent(std::string componentName)

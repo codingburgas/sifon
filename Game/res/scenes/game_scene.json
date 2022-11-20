@@ -1,0 +1,13 @@
+[
+  {
+    "TagName": "Game",
+    "DestroyOnReload": true,
+    "Components": {
+      "MapRenderer": {
+        "MapStoreEntityTag": "MapStore"
+      },
+      "GameUI": {},
+      "SidebarView": {}
+    }
+  }
+]

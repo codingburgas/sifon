@@ -62,6 +62,8 @@ public:
      */
     void AddComponent(std::shared_ptr<Component> component);
 
+    void RemoveComponent(std::string componentName);
+
     /**
      * @brief Gets the wanted component
      * 
