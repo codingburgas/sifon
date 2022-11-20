@@ -4,6 +4,7 @@
 #include <reasings.h>
 #include <memory>
 #include <cmath>
+#include "rlgl.h"
 
 // https://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon
 bool IsPointInPolygon(Vec2f point, Polygon polygon)
@@ -61,7 +62,8 @@ void MapRenderer::OnCreate()
 	m_MapStoreComponent = mapStore;
 }
 
-void HandleInput(const std::unordered_map<std::string, std::vector<Polygon>>& countryTable, Camera2D& m_Camera)
+void HandleInput(const std::unordered_map<std::string, std::vector<Polygon>>& countryTable, Camera2D& m_Camera,
+	std::function<bool(std::string)>& callback, std::unordered_map<std::string, bool>& organisationRegions)
 {
 	if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
 	{
@@ -78,7 +80,7 @@ void HandleInput(const std::unordered_map<std::string, std::vector<Polygon>>& co
 			{
 				if (IsPointInPolygon(mousePosInWorld, polygon))
 				{
-					std::cout << "INFO: " << name << std::endl;
+					organisationRegions[name] = callback(name);
 					breakFlag = true;
 					break;
 				}
@@ -103,38 +105,54 @@ void UpdateCamera(Camera2D& m_Camera)
 	}
 }
 
-void RenderMap(const std::unordered_map<std::string, std::vector<Polygon>>& countryTable, const std::unordered_map<std::string, Vec2f>& regionCenters)
+void RenderMap(const std::unordered_map<std::string, std::vector<Polygon>>& countryTable)
 {
 	for (auto& [name, polygons] : countryTable)
 	{
 		for (auto& polygon : polygons)
 		{
-			DrawLineStrip(const_cast<Vector2*>(polygon.data()), polygon.size(), WHITE);
+			std::vector<Vector2> points;
+			for (auto it = polygon.begin(); it != polygon.end() - 1; it++)
+			{
+				DrawLineEx(*it, *(it + 1), 3.f, WHITE);
+			}
 		}
 	}
 }
 
-void RenderCenters(const std::unordered_map<std::string, Vec2f>& regionCenters)
+void RenderCenters(const std::unordered_map<std::string, Vec2f>& regionCenters, const std::unordered_map<std::string, bool>& regionOrganisations)
 {
 	for (auto& [name, center] : regionCenters)
 	{
-		DrawCircleV(center, 10.f, WHITE);
+		Color color;
+		try
+		{
+			if (regionOrganisations.at(name))
+				color = GREEN;
+			else color = WHITE;
+		}
+		catch (const std::out_of_range&)
+		{
+			color = WHITE;
+		}
+		DrawText(name.c_str(), static_cast<int>(center.x) - MeasureText(name.c_str(), 14) / 2, static_cast<int>(center.y) - 7, 14, color);
 	}
 }
+
 
 void MapRenderer::OnUpdate()
 {
 	auto& countryTable = m_MapStoreComponent->m_CountryTable;
-	auto& regionCenters = m_MapStoreComponent->m_RegionCenters;
+	auto& centersTable = m_MapStoreComponent->m_RegionCenters;
 
 	auto gameManager = GET_COMPONENT_FROM(EntityManager::GetInstance()->GetEntityFromTagName("GameController"), GameManager);
-	if (gameManager->GetPaused()) return;
+	if (gameManager->GetPaused() || !m_IsShown) return;
 
-	HandleInput(countryTable, m_Camera);
+	HandleInput(countryTable, m_Camera, m_OnCountryChosenCallback, m_OrganisationRegions);
 	UpdateCamera(m_Camera);
 
 	BeginMode2D(m_Camera);
-	RenderMap(countryTable, regionCenters);
-	RenderCenters(regionCenters);
+	RenderMap(countryTable);
+	RenderCenters(centersTable, m_OrganisationRegions);
 	EndMode2D();
 }
