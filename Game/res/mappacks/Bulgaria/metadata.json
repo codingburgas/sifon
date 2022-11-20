@@ -1,12 +1,12 @@
 {
     "name": "Bulgaria",
     "geoJsonNameKey": "name",
-    "startTime": {
+    "startDate": {
         "day": 1,
         "month": 5,
         "year": 1876
     },
-    "endTime": {
+    "endDate": {
         "day": 3,
         "month": 3,
         "year": 1878
@@ -16,19 +16,22 @@
             "name": "G. Rakosvki",
             "description": "Sabi Stoikov Popovich, or Georgi Sava Rakovski, is a bulgarian revolutionary. He is born 1821 in the town of Kotel. He is the founding father of the fight for national freedom. In 1860 he goes to Belgrade, where he founds the famous 'Hvurkovata Cheta', which is called that way, because of how fast it moved on the battlefield. He dies in 1867 in Bucharest from tuberculosis. His contribution to the fight for national freedom is immeasurable.",
             "imagePath": "georgirakovski.png",
-            "boosts": [ 1, 1, 1, 1, 1, 1, 1, 1 ]
+            "boosts": [ 0.9, 1.1, 0.8, 1.2, 1, 1.2, 1, 1.1 ],
+            "monthlyIncome": 10000
         },
         {
             "name": "Hristo Botev",
             "description": "Hristo Botkov Petkov, or Hristo Botev, is a bulgarian revolutionary and poet. He is born 1848 and grows up in the town of Kalofer. He writes many poems and literature for Bulgaria. He is famous with stealing the ship 'Koraba Radecki' to cross the Danube to join the fight. He dies in the battle, most likely betrayed by his own crew, in 1876. He remains as one of the greats in Bulgarian history. A revolutionary, a poet and a son of Bulgaria.",
             "imagePath": "hristobotev.png",
-            "boosts": [ 1, 1, 1, 1, 1, 1, 1, 1 ]
+            "boosts": [ 1.2, 1.2, 0.9, 1, 1.1, 1, 0.9, 0.9 ],
+            "monthlyIncome": 8750
         },
         {
             "name": "Vasil Levski",
             "description": "Vasil Ivanov Kunchev, or Vasil Levski, is a bulgarian national hero. He is born 1837 in a poor family and grows up in the town of Karlovo. He gets his name 'Levski' from his bravery and agility in battle. In 1868 he goes around Bulgaria and founds a revolutionary organization called VRO. He dies in 1873, betrayed by the people, he so tried to help. He is famous for his bravery and remains as the greatest hero in Bulgaria's history.",
             "imagePath": "vasillevski.png",
-            "boosts": [ 1, 1, 1, 1, 1, 1, 1, 1 ]
+            "boosts": [ 1.1, 1.2, 1.2, 0.9, 1, 0.8, 0.9, 0.9 ],
+            "monthlyIncome": 7500
         }
     ]
 }
