@@ -4,7 +4,7 @@
     "TagName": "MappackMetadata",
     "Components": {
       "MappackMetadataStore": {
-        "MetadataPath": "res/mappacks/Bulgaria/metadata.json"
+        "MetadataPath": "res\\mappacks\\Bulgaria\\metadata.json"
       }
     }
   },
@@ -17,7 +17,75 @@
   },
   {
     "Components": {
-      "MainMenu": {}
+      "MainMenu": {},
+      "TransformComponent2D": {
+        "Position": {
+          "x": 575,
+          "y": 268
+        },
+        "Rotation": 0,
+        "Scale": {
+          "x": 1,
+          "y": 1
+        }
+      },
+      "SpriteComponent": {
+        "ImagePath": "res\\img\\bulgaria.png"
+      }
+    }
+  },
+  {
+    "Components": {
+      "TransformComponent2D": {
+        "Position": {
+          "x": 40,
+          "y": 40
+        },
+        "Rotation": 0,
+        "Scale": {
+          "x": 0.2,
+          "y": 0.2
+        }
+      },
+      "SpriteComponent": {
+        "ImagePath": "res\\img\\logo.png"
+      }
+    }
+  },
+  {
+    "Components": {
+      "TransformComponent2D": {
+        "Position": {
+          "x": 101,
+          "y": 40
+        },
+        "Rotation": 0,
+        "Scale": {
+          "x": 0.2,
+          "y": 0.2
+        }
+      },
+      "SpriteComponent": {
+        "ImagePath": "res\\img\\eight_ball_engine_logo.png"
+      }
+    }
+  },
+  {
+    "Components": {
+      "TransformComponent2D": {
+        "Position": {
+          "x": 162,
+          "y": 40
+        },
+        "Rotation": 0,
+        "Scale": {
+          "x": 0.2,
+          "y": 0.2
+        }
+      },
+      "SpriteComponent": {
+        "ImagePath": "res\\img\\raylib_logo.png"
+      }
     }
   }
 ]
