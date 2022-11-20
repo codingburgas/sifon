@@ -48,7 +48,24 @@ class PauseMenu : public UIElement
 		}
 	}
 
+	bool m_IsShown = true;
+
 public:
+	void ToggleShow()
+	{
+		m_IsShown = !m_IsShown;
+	}
+
+	void Show()
+	{
+		m_IsShown = true;
+	}
+
+	void Hide()
+	{
+		m_IsShown = false;
+	}
+
 	PauseMenu()
 	{
 		const std::unordered_map<std::string, std::function<void()>> pauseButtonData{
@@ -56,13 +73,7 @@ public:
 				auto gameManager = GET_COMPONENT_FROM(EntityManager::GetInstance()->GetEntityFromTagName("GameController"), GameManager);
 				gameManager->SetPaused(false);
 			}},
-			{"Evolution Tree", []() {}},
-			{"Save", []() {
-				GET_COMPONENT_FROM(
-					EntityManager::GetInstance()->GetEntityFromTagName("GameController"),
-					GameManager)->SaveSavefile();
-			}},
-			{"Save & Quit", []() {
+			{"Quit", []() {
 				GET_COMPONENT_FROM(
 					EntityManager::GetInstance()->GetEntityFromTagName("GameController"),
 					GameManager)->SaveSavefile();
@@ -74,7 +85,7 @@ public:
 
 		for (auto& [text, callback] : pauseButtonData)
 		{
-			auto button = std::make_unique<PauseButton>(text, GRAY);
+			auto button = std::make_unique<PauseButton>(text, Color{ 56, 56, 56, 149 });
 			button->m_Position.x = GetScreenWidth() / 2.f - button->GetSize().x / 2.f;
 			button->m_Position.y = currentYPos;
 			currentYPos += Button::s_FontSize + Button::s_Padding.y * 2.f + c_Spacing;
@@ -90,7 +101,7 @@ public:
 	void Draw() override
 	{
 		auto gameManager = GET_COMPONENT_FROM(EntityManager::GetInstance()->GetEntityFromTagName("GameController"), GameManager);
-		if (!gameManager->GetPaused()) return;
+		if (!gameManager->GetPaused() || !m_IsShown) return;
 
 		HandleInput();
 		DrawButtons();
