@@ -42,13 +42,22 @@ void Graphics::SetWindowPosition(Vec2f pos)
     ::SetWindowPosition(static_cast<int>(pos.x), static_cast<int>(pos.y));
 }
 
-// TODO!
 void CTexture::LoadEmpty(Vec2i res)
 {
     Unload();
 
     renderTexture = LoadRenderTexture(res.x, res.y);
     verticallyMirroredTexture = LoadRenderTexture(res.x, res.y);
+
+    BeginTextureMode(renderTexture);
+    ClearBackground(BLACK);
+    ClearBackground({});
+    EndTextureMode();
+
+    BeginTextureMode(verticallyMirroredTexture);
+    ClearBackground(BLACK);
+    ClearBackground({});
+    EndTextureMode();
 
     if (renderTexture.texture.id == 0 || verticallyMirroredTexture.texture.id == 0)
         throw std::runtime_error("Frame buffer (render texture) could not be created");
