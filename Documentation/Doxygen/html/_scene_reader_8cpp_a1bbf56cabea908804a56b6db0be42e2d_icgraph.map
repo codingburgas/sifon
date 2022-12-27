@@ -1,0 +1,4 @@
+<map id="GetFileContents" name="GetFileContents">
+<area shape="rect" id="node1" title="Gets the contents of the .json file." alt="" coords="180,5,296,32"/>
+<area shape="rect" id="node2" href="$_scene_reader_8cpp.html#a783f88ef5e87eb00af887709977a4f61" title="Initializes a string from a .json file in the param." alt="" coords="5,5,132,32"/>
+</map>

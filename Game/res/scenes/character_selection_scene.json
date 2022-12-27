@@ -1,0 +1,8 @@
+[
+  {
+    "DestroyOnReload": true,
+    "Components": {
+      "CharacterSelectMenu": {}
+    }
+  }
+]

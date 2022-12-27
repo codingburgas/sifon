@@ -1,0 +1,108 @@
+\hypertarget{_scene_reader_8cpp_source}{}\doxysection{Scene\+Reader.\+cpp}
+\label{_scene_reader_8cpp_source}\index{Engine/Source/SceneReader.cpp@{Engine/Source/SceneReader.cpp}}
+\mbox{\hyperlink{_scene_reader_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{_scene_reader_8hpp}{SceneReader.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00002}00002 \textcolor{preprocessor}{\#include "{}Managers/ECSManager.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00004}00004 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00005}00005 \textcolor{preprocessor}{\#include <cassert>}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00006}00006 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00008}00008 \textcolor{preprocessor}{\#include "{}Components/TransformComponent2D.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00009}00009 \textcolor{preprocessor}{\#include "{}Components/SpriteComponent.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00011}00011 \textcolor{preprocessor}{\#include "{}Util/json.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00020}\mbox{\hyperlink{_scene_reader_8cpp_a1bbf56cabea908804a56b6db0be42e2d}{00020}} std::string \mbox{\hyperlink{_scene_reader_8cpp_a1bbf56cabea908804a56b6db0be42e2d}{GetFileContents}}(\textcolor{keyword}{const} std::string path)}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00021}00021 \{}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00022}00022     std::stringstream jsonStream;}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00024}00024     std::ifstream fJson;}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00029}00029     fJson.open(path, std::ios::in);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00031}00031     \textcolor{keywordflow}{if} (!fJson.is\_open())}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00032}00032         \textcolor{keywordflow}{throw} std::runtime\_error(\textcolor{stringliteral}{"{}File \(\backslash\)"{}"{}} + path + \textcolor{stringliteral}{"{}\(\backslash\)"{} could not be opened"{}});}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00033}00033     }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00037}00037     std::string jsonLine;}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00038}00038     \textcolor{keywordflow}{while} (std::getline(fJson, jsonLine))}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00039}00039         jsonStream << jsonLine << \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00040}00040     }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00041}00041     fJson.close();}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00046}00046     \textcolor{keywordflow}{return} jsonStream.str();}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00047}00047 \}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00049}\mbox{\hyperlink{_scene_reader_8cpp_a783f88ef5e87eb00af887709977a4f61}{00049}} \textcolor{keywordtype}{void} \mbox{\hyperlink{_scene_reader_8cpp_a783f88ef5e87eb00af887709977a4f61}{InitSceneFromFile}}(\textcolor{keyword}{const} std::string fPath)}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00050}00050 \{}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00054}00054     std::string contents = \mbox{\hyperlink{_scene_reader_8cpp_a1bbf56cabea908804a56b6db0be42e2d}{GetFileContents}}(fPath);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00055}00055     nlohmann::json sJson = nlohmann::json::parse(contents);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00057}00057     assert(sJson.is\_array() \&\& \textcolor{stringliteral}{"{}Invalid Scene JSON File!"{}});}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00059}00059     printf(\textcolor{stringliteral}{"{}[SceneReader] INFO: Initializing scene from file \%s\(\backslash\)n"{}}, fPath.c\_str());}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00064}00064     \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& ent : sJson)}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00065}00065     \{}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00066}00066         std::shared\_ptr<Entity> entity;}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00067}00067         }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00068}00068         \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00069}00069             std::string tag;}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00070}00070             ent[\textcolor{stringliteral}{"{}TagName"{}}].get\_to(tag);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00072}00072             \textcolor{keywordflow}{if} (EntityManager::GetInstance()-\/>TagNameAlreadyExists(tag) \&\& !tag.empty())}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00073}00073             \{}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00074}00074                 printf(\textcolor{stringliteral}{"{}[SceneReader] WARN: Entity with tag \(\backslash\)"{}\%s\(\backslash\)"{} already exists, thus the current entity will be ignored!\(\backslash\)n"{}}, tag.c\_str());}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00075}00075                 \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00076}00076             \}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00078}00078             entity = ECS::CreateEntity();}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00079}00079             entity-\/>Tag = tag;}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00080}00080         \} \textcolor{keywordflow}{catch}(\textcolor{keyword}{const} nlohmann::json::exception\&) \{}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00081}00081             printf(\textcolor{stringliteral}{"{}[SceneReader] WARN: TagName is missing in entity!\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00082}00082             entity = ECS::CreateEntity();}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00083}00083         \}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00085}00085         \textcolor{keywordflow}{try} \{}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00086}00086             ent[\textcolor{stringliteral}{"{}DestroyOnReload"{}}].get\_to(entity-\/>DestroyOnReload);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00087}00087         \} \textcolor{keywordflow}{catch}(\textcolor{keyword}{const} std::exception\&) \{\}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00089}00089         \textcolor{keywordflow}{if} (!entity-\/>DestroyOnReload \&\& entity-\/>Tag.empty())}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00090}00090             \textcolor{keywordflow}{throw} std::runtime\_error(\textcolor{stringliteral}{"{}Cannot have global (DestroyOnReload = true) entities without tags"{}});}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00091}00091 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00092}00092         printf(\textcolor{stringliteral}{"{}[SceneReader] INFO: Entity with ID \%lld, Tag \(\backslash\)"{}\%s\(\backslash\)"{} has the following components:\(\backslash\)n"{}},}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00093}00093             entity-\/>GetID(), entity-\/>Tag.c\_str());}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00098}00098         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto}\& [name, component] : ent[\textcolor{stringliteral}{"{}Components"{}}].items())}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00099}00099         \{}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00100}00100             \textcolor{keywordflow}{if} (name == \textcolor{stringliteral}{"{}TransformComponent2D"{}})}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00101}00101             \{}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00102}00102                 \textcolor{keyword}{auto} cmp = ECS::CreateComponent<TransformComponent2D>();}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00104}00104                 component[\textcolor{stringliteral}{"{}Position"{}}][\textcolor{stringliteral}{"{}x"{}}].get\_to(cmp-\/>Position.x);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00105}00105                 component[\textcolor{stringliteral}{"{}Position"{}}][\textcolor{stringliteral}{"{}y"{}}].get\_to(cmp-\/>Position.y);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00107}00107                 component[\textcolor{stringliteral}{"{}Rotation"{}}].get\_to(cmp-\/>Rotation);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00109}00109                 component[\textcolor{stringliteral}{"{}Scale"{}}][\textcolor{stringliteral}{"{}x"{}}].get\_to(cmp-\/>Scale.x);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00110}00110                 component[\textcolor{stringliteral}{"{}Scale"{}}][\textcolor{stringliteral}{"{}y"{}}].get\_to(cmp-\/>Scale.y);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00112}00112                 entity-\/>AddComponent(cmp);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00113}00113             \}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00114}00114             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (name == \textcolor{stringliteral}{"{}SpriteComponent"{}})}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00115}00115             \{}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00116}00116                 \textcolor{keyword}{auto} cmp = ECS::CreateComponent<SpriteComponent>();}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00117}00117 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00118}00118                 component[\textcolor{stringliteral}{"{}ImagePath"{}}].get\_to(cmp-\/>ImagePath);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00119}00119 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00120}00120                 entity-\/>AddComponent(cmp);}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00121}00121             \}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00122}00122             \textcolor{keywordflow}{else} \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00123}00123 }
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00124}00124             printf(\textcolor{stringliteral}{"{}[SceneReader] INFO:    -\/ \%s\(\backslash\)n"{}}, name.c\_str());}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00125}00125         \}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00126}00126     \}}
+\DoxyCodeLine{\Hypertarget{_scene_reader_8cpp_source_l00127}00127 \}}
+
+\end{DoxyCode}

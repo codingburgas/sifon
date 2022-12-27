@@ -1,0 +1,93 @@
+\hypertarget{_scene_reader_8cpp}{}\doxysection{Engine/\+Source/\+Scene\+Reader.cpp File Reference}
+\label{_scene_reader_8cpp}\index{Engine/Source/SceneReader.cpp@{Engine/Source/SceneReader.cpp}}
+{\ttfamily \#include \char`\"{}Scene\+Reader.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Managers/\+ECSManager.\+hpp\char`\"{}}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include \char`\"{}Components/\+Transform\+Component2\+D.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Components/\+Sprite\+Component.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Util/json.\+hpp\char`\"{}}\newline
+Include dependency graph for Scene\+Reader.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_scene_reader_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{_scene_reader_8cpp_a1bbf56cabea908804a56b6db0be42e2d}{Get\+File\+Contents}} (const std\+::string path)
+\begin{DoxyCompactList}\small\item\em Gets the contents of the .json file. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{_scene_reader_8cpp_a783f88ef5e87eb00af887709977a4f61}{Init\+Scene\+From\+File}} (const std\+::string f\+Path)
+\begin{DoxyCompactList}\small\item\em Initializes a string from a .json file in the param. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_scene_reader_8cpp_a1bbf56cabea908804a56b6db0be42e2d}\label{_scene_reader_8cpp_a1bbf56cabea908804a56b6db0be42e2d}} 
+\index{SceneReader.cpp@{SceneReader.cpp}!GetFileContents@{GetFileContents}}
+\index{GetFileContents@{GetFileContents}!SceneReader.cpp@{SceneReader.cpp}}
+\doxysubsubsection{\texorpdfstring{GetFileContents()}{GetFileContents()}}
+{\footnotesize\ttfamily std\+::string Get\+File\+Contents (\begin{DoxyParamCaption}\item[{const std\+::string}]{path }\end{DoxyParamCaption})}
+
+
+
+Gets the contents of the .json file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & The path to the .json file\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a string with all the components on an entity 
+\end{DoxyReturn}
+Open the file specified in the path param
+
+While there is still information on the file, extract it. When there is no more information, close the file
+
+Return the stringstream with the information on the file
+
+Definition at line \mbox{\hyperlink{_scene_reader_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{_scene_reader_8cpp_source}{Scene\+Reader.\+cpp}}.
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=298pt]{_scene_reader_8cpp_a1bbf56cabea908804a56b6db0be42e2d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_scene_reader_8cpp_a783f88ef5e87eb00af887709977a4f61}\label{_scene_reader_8cpp_a783f88ef5e87eb00af887709977a4f61}} 
+\index{SceneReader.cpp@{SceneReader.cpp}!InitSceneFromFile@{InitSceneFromFile}}
+\index{InitSceneFromFile@{InitSceneFromFile}!SceneReader.cpp@{SceneReader.cpp}}
+\doxysubsubsection{\texorpdfstring{InitSceneFromFile()}{InitSceneFromFile()}}
+{\footnotesize\ttfamily void Init\+Scene\+From\+File (\begin{DoxyParamCaption}\item[{const std\+::string}]{f\+Path }\end{DoxyParamCaption})}
+
+
+
+Initializes a string from a .json file in the param. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em f\+Path} & The path to the .json file \\
+\hline
+\end{DoxyParams}
+Gets the contents of the file in the f\+Path param with the \mbox{\hyperlink{_scene_reader_8cpp_a1bbf56cabea908804a56b6db0be42e2d}{Get\+File\+Contents()}} function
+
+Create an entity for every entity in the .json file, and give it its tag name if it doesn\textquotesingle{}t already exist
+
+For every component in the just created entity, create it and bind it to it
+
+Definition at line \mbox{\hyperlink{_scene_reader_8cpp_source_l00049}{49}} of file \mbox{\hyperlink{_scene_reader_8cpp_source}{Scene\+Reader.\+cpp}}.
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=298pt]{_scene_reader_8cpp_a783f88ef5e87eb00af887709977a4f61_cgraph}
+\end{center}
+\end{figure}

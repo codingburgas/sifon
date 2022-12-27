@@ -1,0 +1,30 @@
+{
+    "name": "Macedonia",
+    "geoJsonNameKey": "name",
+    "startDate": {
+        "day": 1,
+        "month": 5,
+        "year": 1876
+    },
+    "endDate": {
+        "day": 3,
+        "month": 3,
+        "year": 1878
+    },
+    "characters": [
+        {
+            "name": "Svircho",
+            "description": "Svircho e bog.",
+            "imagePath": "svircho.png",
+            "boosts": [ 99, 99, 99, 99, 99, 99, 99, 99 ],
+            "monthlyIncome": 10000
+        },
+        {
+            "name": "Loki",
+            "description": "loki.",
+            "imagePath": "loki.png",
+            "boosts": [ 0.09, 0.09, 0.09, 0.09, 0.09, 0.09, 0.09, 0.09 ],
+            "monthlyIncome": 8750
+        }
+    ]
+}
